@@ -1,0 +1,3 @@
+#/usr/bin/bash
+
+jekyll --server --auto --no-lsi

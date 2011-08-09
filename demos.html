@@ -1,0 +1,67 @@
+<!-- include SM2 library -->
+<!-- required -->
+
+<link rel="stylesheet" type="text/css" href="/style/inlineplayer.css" />
+<link rel="stylesheet" type="text/css" href="/style/360player.css" />
+<link rel="stylesheet" type="text/css" href="/style/360player-visualization.css" />
+
+<!--[if IE]><script type="text/javascript"
+  src="script/excanvas.js"></script><![endif]-->
+
+<script type="text/javascript" src="/js/berniecode-animator.js"></script>
+<script type="text/javascript" src="/js/soundmanager2.js"></script>
+<script type="text/javascript" src="/js/360player.js"></script>
+<script type="text/javascript" src="/js/inlineplayer.js"></script>
+
+<!-- configure it for your use -->
+<script type="text/javascript">
+
+  soundManager.url = '/swf/'; // directory where SM2 .SWFs live
+//  soundManager.useHTML5Audio = true;
+
+  /*
+  soundManager.onload = function() {
+    soundManager.createSound('jam','/media/jam.mp3');
+    soundManager.play('jam');
+  };
+  */
+
+soundManager.useFastPolling = true; // increased JS callback frequency, combined useHighPerformance = true
+
+threeSixtyPlayer.config.scaleFont = (navigator.userAgent.match(/msie/i)?false:true);
+threeSixtyPlayer.config.showHMSTime = true;
+
+threeSixtyPlayer.config.useWaveformData = true;
+threeSixtyPlayer.config.useEQData = true;
+
+if (threeSixtyPlayer.config.useWaveformData) {
+    soundManager.flash9Options.useWaveformData = true;
+}
+
+if (threeSixtyPlayer.config.useEQData) {
+    soundManager.flash9Options.useEQData = true;
+}
+
+if (threeSixtyPlayer.config.usePeakData) {
+    soundManager.flash9Options.usePeakData = true;
+}
+
+threeSixtyPlayer.config.useFavIcon = false;
+</script>
+<div id="sm2-container"></div>
+
+<h3>Demo Sounds</h3>
+
+<div>
+  <div class="ui360 ui360-vis">
+    <a href="/media/jam.mp3">jam</a>
+  </div>
+</div>
+
+
+<ul>
+  <li><a href="/media/808.mp3">TR-808</a></li>
+  <li><a href="/media/numbers.mp3">numbers</a></li>
+</ul>
+
+

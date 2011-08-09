@@ -1,0 +1,128 @@
+/* @bg1: #555555; */
+@bg1: rgb(50, 50, 50);
+@bg2: rgb(50, 50, 50); /* #D2D2D2; */
+@c1: rgb(0, 130, 226);
+@c2: rgb(15, 157, 75);
+@text: #ffffff;
+
+@inset: 10px;
+
+body {
+  margin-top: 0;
+  padding-top: 0;
+  background-color: @bg1;
+  font-family: "Trebuchet MS",Verdana,Arial,Helvetica,sans-serif;
+  color: @text;
+}
+
+h1 { 
+  font-size: 3.8em; 
+  color: @text; 
+  margin-bottom: 3px; 
+}
+
+h1 .small { 
+  font-size: 0.4em; 
+}
+
+h1 a { 
+  text-decoration: none 
+}
+
+h2 { 
+  font-size: 1.5em; 
+  color: @text; 
+  border-bottom: 1px solid #ffffff;
+  padding-left: 5px;
+}
+
+h3 { 
+  text-align: center; 
+  color: @text; 
+}
+
+a, a:visited, a:hover { 
+  color: @c1;
+  text-decoration: none;
+}
+
+h4 a {
+  color: @c2;
+  font-size: 120%;
+}
+
+a img {
+  text-decoration: none;
+  color: white;
+}
+
+div.highlight {
+  width: 90%;
+  margin-left: 1em;
+}
+
+pre { 
+  padding: 15px;
+  background-color: #eeeeee;
+  color: #000000;
+}
+
+hr { 
+  border: 0; 
+  width: 80%; 
+  border-bottom: 1px solid #aaa
+}
+
+#container {
+  background-color: @bg2;
+  margin: 0 auto;
+  width: 700px;
+  padding: 20px;
+}
+
+#header {
+  width: 100%;
+  padding: 5px;
+}
+
+#content {
+  padding: @inset;
+}
+
+div.post {
+  padding-left: @inset;
+  padding-right: @inset;
+}
+
+.description { 
+  font-size: 1.2em;
+  margin-bottom: 30px;
+  margin-top: 30px;
+  font-style: italic;
+}
+
+.download { 
+  float: right; 
+}
+
+.footer { 
+  text-align:center; 
+  padding-top:30px; 
+  font-style: italic; 
+}
+
+ul#menu {
+  margin: @inset auto;
+  width: 300px;
+  border-top: 1px solid #ffffff;
+  border-bottom: 1px solid #ffffff;
+  padding: 5px;
+  padding-left: 50px;
+
+  li {
+    display: inline;
+    margin-right: @inset;
+    font-size: 1.2em;
+    padding: 5px;
+  }
+}
