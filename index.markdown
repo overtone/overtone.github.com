@@ -21,7 +21,6 @@ Overtone runs on Linux, OSX, and Windows.  The only core dependency is [Java](ht
 ## Contributors ##
 
 * [Jeff Rose](http://lifeisagraph.com)
-* Jon Rose
 * [Sam Aaron](http://sam.aaron.name)
 * [Fabian Aussems](http://mozinator.eu/)
 * Christophe McKeon
@@ -30,6 +29,17 @@ Overtone runs on Linux, OSX, and Windows.  The only core dependency is [Java](ht
 * Nicolas Buduroi
 * Iain Wood
 * Marmaduke Woodman
+* Thomas Karolski
+* Nick Orton
+* Kevin Neaton
+* Chris Ford
+* Philip Potter
+* Matthew Gilliard
+* Dave Ray
+* Harold Hausman
+* Jennifer Smith
+* Jacob Lee
+* Jon Rose
 
 ## Future Plans
 
