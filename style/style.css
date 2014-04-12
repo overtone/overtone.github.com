@@ -17,7 +17,7 @@ h5 { font-size: 18px; }
 h6 { font-size: 16px; }
 p { margin: 0 0 15px 0; }
 a { text-decoration: none; color: #ff2f92;}
-a:hover { color: #222; }
+a:hover { color: #ffffff; background-color: #555555}
 em { font-style: italic; }
 ul { margin: 0 0 15px 15px; list-style-type: circle; }
 ol { margin: 15px 0 15px 20px; list-style-type: decimal; }
@@ -37,13 +37,13 @@ blockquote { margin: 20px 40px; padding: 10px; background-color: #eee; border: 1
 
 #nav { float: left;  width: 960px; padding: 80px  0px 0px;  position: relative; list-style: none; margin: 20px 0 0 0; z-index: 0; }
 #nav a { float: left; display: block; font: normal 18px Arial, sans-serif; color: #555555; }
-#nav li a:hover { color: #0B79A3; }
+#nav li a:hover { background-color: #555555; color: #ffffff }
 #nav li { float: left; position: relative; }
 #nav li span { float: left; padding: 0 20px; font-size: 18px; color: #555; margin-top: -3px }
 #nav-item-last span { display: none; }
 #nav li:hover > ul { display: block; }
 #nav ul { background: #EEEEEE; display: none; margin: 0; padding: 0; width: 230px; position: absolute; top: 20px; left: 0px; border: solid 1px #ddd; list-style: none; }
-#nav ul a:hover { background-color: #0B79A3; color: #ffffff; }
+#nav ul a:hover { background-color: #555555; color: #ffffff; }
 #nav ul li { float: none; margin: 0; padding: 0; }
 #nav ul a { padding: 8px 10px; color: #444444; font-size: 16px; float: none; }
 #nav ul span { display: none; }
