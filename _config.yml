@@ -1,3 +1,5 @@
-exclude: ['src', 'ext', 'lib', 'doc', 'autodoc', 'docs']
-pygments: true
+exclude: ['src', 'ext', 'lib', 'doc', 'autodoc']
+include: ['docs.html' ]
 lsi: false
+highlighter: rouge
+
