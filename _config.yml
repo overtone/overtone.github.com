@@ -1,5 +1,5 @@
 exclude: ['src', 'ext', 'lib', 'doc', 'autodoc']
-include: ['docs.html' ]
+include: ['docs' ]
 lsi: false
 highlighter: rouge
 

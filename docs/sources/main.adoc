@@ -13,10 +13,10 @@
 :sectanchors:
 :leveloffset: 1
 :sectnums:
-:imagesdir: ../assets/img
 :scriptsdir: js
-:imagesoutdir: ../assets/img
 :overtone-version: 0.10.3
+:imagesdir: media/docs_img
+:imagesoutdir: media/docs_img
 
 ifdef::env-github[]
 :tip-caption: :bulb:
@@ -54,9 +54,11 @@ endif::[]
 
 == Preface
 
-It is my hope that this book will be a gentle introduction to `Overtone` to a complete beginner as well for a novice. If I were to tell you, dear reader, that a beginner could install Overtone and start makeing music without a hurdle, I would be lying. The computer can be amazing, exciting tool to fulfill our creative needs. But at the same time the computer, and its building blocks, computer programs and code, can be at times undescribeably painful, misconfigured and unpredictive. The hurdles you may encounter may include tooling, mac/linux/windows specific problems, files and libraries mislocated, version incompatabilities, and the list can go on forever. Luckily we will be getting ourselves comfortable with the programming language Clojure, which in the total 10 years of its existance, has seen an explosion of book publications, tutorials, workshops and stackoverflow questions/answers. So if you find youself in the unfortunate situation of getting stuck, your odds are good that someone else on the internet already had the same problem as you, and you're only one google search away from getting yourself back on track. At any point in time for any problem you are faceing, you should always feel welcome to open ticket on github, ask question on stackoverflow, the irc(freenode) or on slack(clojurians). The software community as a whole is riddled with micro-aggressive "bromance" behaviour and hence can be at times quite intimidateing for beginners to reach out for help. Which among other factors(in my subjective opinion), we end up with demographics of coders, be it art related or not, completly out of porpotion in relation to the demographics of the general population. Please be aware that the Clojure community has on all social-media platforms, meetups and conferences a set of guidelines for behaviour, protocols in case of violation and group of confidentials to report violations to.
+It is my hope that this book will be a gentle introduction to `Overtone` for a complete beginner as well for a novice. I hope to approach the topic of Overtone with grain of cynicism; "what can go wrong will go wrong". Overtone is still highly stable library and for a workshop of 6-8 participants, it takes usually half an hour or less to get everyone started. That said, you'll most likely encounter redundant details and/or debugging instructions for highly improbably scenereos while reading this book. Keep in mind that what may seem obvious to you isn't necessarily obvious to everyone.
 
-As my personal advice to you for your journey into the world of creative codeing, don't believe everything software engineers tell you about software, in the same way you shouldn't believe everything an artist tells you about how art should be. An artist and software-enginner will and should approach code in totally different way. You will never hear stories about Beethoven implementing a Continous Integration test to determine if his 7th symphony accedentally lost a note while he was writing his 8th, or Stravinsky trip out on his Bassoon type checker when he wrote the introduction to the Rite of Spring. Learning from the best is always a good approach and becoming better at programming is only going to make you faster and more effective, but do watch out for the abyss of infinite information and take moderate actions. If our goal is to create art for the real world, be completly shameless if your code isn't orthodoxial as long as it produces the desired result and you had fun writing the code.
+The computer can be amazing, exciting tool to fulfill our creative needs. But at the same time the computer, and its building blocks, computer programs and code, can be at times undescribeably painful, misconfigured and unpredictive. The hurdles you may encounter may include tooling, mac/linux/windows specific problems, files and libraries mislocated, version incompatabilities, and the list can go on forever. Luckily we will be getting ourselves comfortable with the programming language Clojure, which in the total 10 years of its existance, has seen an explosion of book publications, tutorials, workshops and stackoverflow questions/answers. So if you find youself in the unfortunate situation of getting stuck with something unrelated to Overtone, your odds are good that someone else on the internet already had the same problem as you, and you're only one google search away from getting yourself back on track. At any point in time for any problem you are faceing, you should always feel welcome to open ticket on github, ask question on stackoverflow, the irc(freenode) or on slack(clojurians). The software community as a whole is riddled with micro-aggressive "bromance" behaviour and hence can be at times quite intimidateing for beginners to reach out for help. Which among other factors(in my subjective opinion), we end up with demographics of coders, be it art related or not, completly out of porpotion in relation to the demographics of the general population. Please be aware that the Clojure community has on all social-media platforms, meetups and conferences a set of guidelines for behaviour, protocols in case of violation and group of confidentials to report violations to. I believe that these measures has made the Clojure community relatively more inclusive and diverse, every day I see experienced developers go out of their way to help someone in need of help and I hope you will enjoy the benefits of the Clojure community in the same way as I did when I was a total beginner.
+
+As my personal advice as an artist to artists stepping into the journey of creative codeing; don't believe everything software engineers tell you about software, in the same way you shouldn't believe everything an artist tells you about how art should be. An artist and software-enginner will and should approach code in different ways. You will never hear stories about Beethoven implementing a Continous Integration test to determine if his 7th symphony accedentally lost a note while he was writing his 8th, or Stravinsky trip out on his Bassoon type checker when he wrote the introduction to the Rite of Spring. Learning from the best is always a good approach and becoming better at programming is only going to make you faster and more effective, but do watch out for the abyss of infinite information and take moderate actions. If our goal is to create art for the real world, be completly shameless if your code isn't orthodoxial as long as it produces the desired result and you had fun writing the code. While the "old-school" composer is sitting next to a piano with pen and empty staff notation paper and plans her next 
 
 
 == About this Book
@@ -73,6 +75,8 @@ This source for this book is hosted on https://github.com/overtone/overtone.gith
 === Conventions Used
 
 The examples and code used in this book will try to be as neutral as possible when it comes to choice of text-editor. All modern text editors have some sort of plugin to run and evaluate Clojure code. If you are starting out with the programming language Clojure, you may easily get confused or lost on how to replicate some of the examples in your text editor. Therefore we aim to make all of our examples repliceable useing nothing but Leiningen in the terminal via `lein repl`, and assume from the reader basic understanding of the terminal/cmd (if you know how to explore directories and install apps with the terminal, you probably know enough). Leiningen is the most popular build tool in Clojure and is the build tool that glues Overtone's sources and dependencies togeather. Overtone does work with alternative build tools like `boot`, as well as a standalone java jar file, but that and how to integrate Overtone to specific text-editor will not be included in this book.
+
+Please be also aware, that topics often overlap, if something isn't clear, have a look at the chapter titles to see if the concepts you're trying to understand is explained elswhere in the book.
 
 = Installation
 
@@ -215,6 +219,94 @@ user=>
 
 ```
 
+If something went wrong, see if the stacktrace gave you any meaningful information and proceed to <<Configuration>> and try to rule out that something isn't misconfigured. And come back here and try to start Overtone again before continueing. A good rule of thumb is to read stacktraces from top to bottom, the uppermost lines being the most important ones in most of the cases.
+
 TIP: If you're on Linux too and encounter `Cannot allocate memory` and/or `Cannot use real-time scheduleing` you can totally ignore that, it just means that you're not running preempt realtime-kernel. Switching to rt-kernel can potentially improve your audio performance by allowing Jack to send audio on top priority, but at the cost potentially make things very complicated and possibly insecure, as rt-kernels are usually released at much later than other kernels. If you want to run proprietary nvidia/ati drivers on preemt rt-kernel, you're most likely going too have a bad time, irrelevant if you're a linux expert or a beginner.
 
 
+Now that we have Overtone running successfully. We can start all the functions that Overtone provides at our disposal. Among them is an important helper function called `doc`, which will print the documentation to any function in your scope/reach. Let's try it on the symbols `demo` and `sin-osc`.
+
+```Bash
+user=> (doc demo)
+-------------------------
+overtone.live/demo
+([& body])
+Macro
+  Listen to an anonymous synth definition for a fixed period of time.
+  Useful for experimentation.  If the root node is not an out ugen, then
+  it will add one automatically.  You can specify a timeout in seconds
+  as the first argument otherwise it defaults to *demo-time* ms. See
+  #'run for a version of demo that does not add an out ugen.
+
+  (demo (sin-osc 440))      ;=> plays a sine wave for *demo-time* ms
+  (demo 0.5 (sin-osc 440))  ;=> plays a sine wave for half a second
+nil
+user=> 
+```
+
+```Bash
+user=> (doc sin-osc)
+-------------------------
+overtone.live/sin-osc
+([freq phase mul add])
+  
+  Sine table lookup oscillator 
+
+  [freq 440.0, phase 0.0, mul 1, add 0]
+
+  freq  - Frequency in Hertz 
+  phase - Phase offset or modulator in radians 
+  mul   - Output will be multiplied by this value. 
+  add   - This value will be added to the output. 
+
+  Outputs a sine wave with values oscillating between -1 and 
+  1 similar to osc except that the table has already been 
+  fixed as a sine table of 8192 entries.
+
+  Sine waves are often used for creating sub-basses or are 
+  mixed with other waveforms to add extra body or bottom end 
+  to a sound. They contain no harmonics and consist entirely 
+  of the fundamental frequency. This means that they're not 
+  suitable for subtractive synthesis i.e. passing through 
+  filters such as a hpf or lpf. However, they are useful for 
+  additive synthesis i.e. adding multiple sine waves 
+  together at different frequencies, amplitudes and phase to 
+  create new timbres. 
+
+  Categories: Generators -> Deterministic
+  Rates: [ :ar, :kr ]
+  Default rate: :ar
+nil
+user=> 
+```
+
+Much of what is written in the documentation will be explained in subsequent chapters. But let's suffice to say that `demo` is a function intended to evaluate an instrument and play it immediately for 2 seconds, which can come in handy when developing sounds and you want to hear the results quickly. And `sin-osc` is an oscillator that produces sinewave shape audio-signal (or control-signal, more on that later). Unlike `demo` which needs at least 1 instrument to be given as a parameter, then `sin-osc` can be called without any parameter, if that's the case, then `sin-osc` will look at its own default parameter and use those instead. Which would be 440 cycles per second on full amplitude.
+
+
+We will conculde this chapter by playing 2 seconds of 440Hz sinewave. It wont sound pretty but it's fast and effective way to determine if everything is working accordingly.
+```Clojure
+(demo (sin-osc))
+```
+
+If you're at this point not hearing any audio, and you're sure that nothing is muted on your computer. Then have a look trough the <<Configuration>> chapter before https://github.com/overtone/overtone/issues/new[opening a ticket].
+
+= Sound Designing
+By calling the process of modifying and manipulateing the mechanism of which a wave with energy travels trough a medium, sound-designing, we are effectivly being as broad as possible with our definition and nothing is left out. The amount of books, research papers and publications done on the topic of sound designing is enormous. Take for example the classic book https://mitpress.mit.edu/books/microsound[Microsound by Curtis Roads], it covers in over 400 tightly packed pages the various aspects and applications of granular-synthesis. The mathematics required to grasp the contents of that book would be a level of advanced calculus.
+
+Luckily for us we don't need to concern ourselves with low-level synthesis algorithmis, because inside the Supercollider engine we will find hundreds of functions made to manipulate sound. Functions which gives us more pleasureable interface to the complex mathematics on which they are built upon, in some cases with over two decades of battle tested experience by the Supercollider community on algorithms based on decades of research and hard work by scientists and universities all over the world.
+
+When it comes to sound designing, more often than not, less is more. Case in point would be to analyze the almost infinite sonic possibilities you can fit inside one Twitter tweet with Supercollider code, http://sctweets.tumblr.com/[click to see some examples]. I leave it as home assignment to you after reading this book to write few of those Twitter tweets in Overtone, a great practice to improve your Overtone skills.
+
+== Envelopes
+image::reaper_envelope.jpg[Graphical breakpoint editor in REAPER]
+_Application of envelope via graphical breakpoints_
+
+
+The term envelope may or may not sound alien to you. But if you've ever used attack or decay on modular synthesizer or written breakpoints in a DAW like Ardour, ProTools or Reaper, you have used envelopes. Fade-in and fade-out is another commonly used form of envelope. The basic idea is that as time passes, often shown as x-axis in a plot, some value changes accordingly, often drawn on y-axis.
+
+
+
+
+= Data Types
+
+= Configuration
