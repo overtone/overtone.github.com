@@ -548,11 +548,26 @@ table.CodeRay td.code>pre{padding:0}
 </li>
 <li><a href="#_sound_designing">3. Sound Designing</a>
 <ul class="sectlevel2">
-<li><a href="#_envelopes">3.1. Envelopes</a></li>
+<li><a href="#_envelopes">3.1. Envelopes</a>
+<ul class="sectlevel3">
+<li><a href="#_shapes">3.1.1. Shapes</a></li>
+<li><a href="#_built_in_envelope_shapes">3.1.2. Built-in envelope shapes</a></li>
+<li><a href="#_env_gen_and_linen">3.1.3. env-gen and linen</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#_data_types">4. Data Types</a></li>
-<li><a href="#_configuration">5. Configuration</a></li>
+<li><a href="#_macros">5. Macros</a></li>
+<li><a href="#_ugens">6. UGens</a></li>
+<li><a href="#_external_devices">7. External devices</a>
+<ul class="sectlevel2">
+<li><a href="#_midi">7.1. MIDI</a></li>
+<li><a href="#_osc">7.2. OSC</a></li>
+</ul>
+</li>
+<li><a href="#_timing">8. Timing</a></li>
+<li><a href="#_configuration">9. Configuration</a></li>
 </ul>
 </div>
 </div>
@@ -608,7 +623,7 @@ table.CodeRay td.code>pre{padding:0}
 <p>The computer can be amazing, exciting tool to fulfill our creative needs. But at the same time the computer, and its building blocks, computer programs and code, can be at times undescribeably painful, misconfigured and unpredictive. The hurdles you may encounter may include tooling, mac/linux/windows specific problems, files and libraries mislocated, version incompatabilities, and the list can go on forever. Luckily we will be getting ourselves comfortable with the programming language Clojure, which in the total 10 years of its existance, has seen an explosion of book publications, tutorials, workshops and stackoverflow questions/answers. So if you find youself in the unfortunate situation of getting stuck with something unrelated to Overtone, your odds are good that someone else on the internet already had the same problem as you, and you&#8217;re only one google search away from getting yourself back on track. At any point in time for any problem you are faceing, you should always feel welcome to open ticket on github, ask question on stackoverflow, the irc(freenode) or on slack(clojurians). The software community as a whole is riddled with micro-aggressive "bromance" behaviour and hence can be at times quite intimidateing for beginners to reach out for help. Which among other factors(in my subjective opinion), we end up with demographics of coders, be it art related or not, completly out of porpotion in relation to the demographics of the general population. Please be aware that the Clojure community has on all social-media platforms, meetups and conferences a set of guidelines for behaviour, protocols in case of violation and group of confidentials to report violations to. I believe that these measures has made the Clojure community relatively more inclusive and diverse, every day I see experienced developers go out of their way to help someone in need of help and I hope you will enjoy the benefits of the Clojure community in the same way as I did when I was a total beginner.</p>
 </div>
 <div class="paragraph">
-<p>As my personal advice as an artist to artists stepping into the journey of creative codeing; don&#8217;t believe everything software engineers tell you about software, in the same way you shouldn&#8217;t believe everything an artist tells you about how art should be. An artist and software-enginner will and should approach code in different ways. You will never hear stories about Beethoven implementing a Continous Integration test to determine if his 7th symphony accedentally lost a note while he was writing his 8th, or Stravinsky trip out on his Bassoon type checker when he wrote the introduction to the Rite of Spring. Learning from the best is always a good approach and becoming better at programming is only going to make you faster and more effective, but do watch out for the abyss of infinite information and take moderate actions. If our goal is to create art for the real world, be completly shameless if your code isn&#8217;t orthodoxial as long as it produces the desired result and you had fun writing the code. While the "old-school" composer is sitting next to a piano with pen and empty staff notation paper and plans her next</p>
+<p>As my personal advice as an artist to artists stepping into the journey of creative codeing; don&#8217;t believe everything software engineers tell you about software, in the same way you shouldn&#8217;t believe everything an artist tells you about how art should be. An artist and software-enginner will and should approach code in different ways. You will never hear stories about Beethoven implementing a Continous Integration test to determine if his 7th symphony accedentally lost a note while he was writing his 8th, or Stravinsky trip out on his Bassoon type checker when he wrote the introduction to the Rite of Spring. Learning from the best is always a good approach and becoming better at programming is only going to make you faster and more effective, but do watch out for the abyss of infinite information and take moderate actions. If our goal is to create art for the real world, be completly shameless if your code isn&#8217;t orthodoxial as long as it produces the desired result and you had fun writing the code. While the "old-school" composer is sitting next to a piano with pen and empty staff notation paper, in the same way you will find ourself with an empty text document in your text editor, with your fingers on the keyboard, ready to explore the physical boundries of music, sound and time.</p>
 </div>
 </div>
 <div class="sect2">
@@ -932,7 +947,7 @@ user=&gt;</code></pre>
 <h2 id="_sound_designing"><a class="anchor" href="#_sound_designing"></a><a class="link" href="#_sound_designing">3. Sound Designing</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>By calling the process of modifying and manipulateing the mechanism of which a wave with energy travels trough a medium, sound-designing, we are effectivly being as broad as possible with our definition and nothing is left out. The amount of books, research papers and publications done on the topic of sound designing is enormous. Take for example the classic book <a href="https://mitpress.mit.edu/books/microsound">Microsound by Curtis Roads</a>, it covers in over 400 small lettered pages, the various aspects and applications of <code>granular synthesis</code>. The mathematics required to grasp the contents of that book would be advanced knowledge of calculus.</p>
+<p>By calling the process of modifying and manipulateing the mechanism of which a wave with energy travels trough a medium, sound-designing, we are effectivly being as broad as possible with our definition and nothing is left out. The amount of books, research papers and publications done on the topic of sound designing is enormous. Take for example the classic book <a href="https://mitpress.mit.edu/books/microsound">Microsound by Curtis Roads</a>, it covers in over 400 tightly packed pages the various aspects and applications of granular-synthesis. The mathematics required to grasp the contents of that book would be a level of advanced calculus.</p>
 </div>
 <div class="paragraph">
 <p>Luckily for us we don&#8217;t need to concern ourselves with low-level synthesis algorithmis, because inside the Supercollider engine we will find hundreds of functions made to manipulate sound. Functions which gives us more pleasureable interface to the complex mathematics on which they are built upon, in some cases with over two decades of battle tested experience by the Supercollider community on algorithms based on decades of research and hard work by scientists and universities all over the world.</p>
@@ -951,7 +966,151 @@ user=&gt;</code></pre>
 <p><em>Application of envelope via graphical breakpoints</em></p>
 </div>
 <div class="paragraph">
-<p>The term envelope may or may not sound alien to you. But if you&#8217;ve ever used attack or decay on modular synthesizer or written breakpoints in a DAW like Ardour, ProTools or Reaper, you have used envelopes. Fade-in and fade-out is another commonly used form of envelope. The basic idea is that as time passes, often shown as x-axis in a plot, some value changes accordingly, in our case y-axis.</p>
+<p>The term envelope may or may not sound alien to you. But if you&#8217;ve ever used attack or decay on modular synthesizer or written breakpoints in a DAW like Ardour, ProTools or Reaper, you have used envelopes. Fade-in and fade-out is another commonly used form of envelope. The basic idea is that as time passes, often shown as x-axis in a plot, some value changes accordingly, often drawn on y-axis. In fact envelope can be an oscillator and an oscillator can be used an envelope.</p>
+</div>
+<div class="paragraph">
+<p>Envelopes are most traditionally used to cotrol amplitude and frequency, as will be shown later, envelopes in Overtone can be used for many other things, like amplitude modulation, oscillation, trigger, arpeggiator, trill/tremolo ornaments. Basically anyhing that ties numbers and time togeather.</p>
+</div>
+<div class="sect3">
+<h4 id="_shapes"><a class="anchor" href="#_shapes"></a><a class="link" href="#_shapes">3.1.1. Shapes</a></h4>
+<div class="paragraph">
+<p>Overtone has a function to create envelope shapes in a format that Supercollider understands, called simply <code>envelope</code>. For every envelope there needs to be two vectors provided as arguments, levels (y-axis) and durations in seconds (x-axis), since durations specifies the durations of each step, its size will need to be the size of the levels vector minus 1. You can choose an envelope shape by directly specifying each point via <code>:step</code>, or use one of the following keywords to appply a function to your points.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>:lin</code> a linear function that creates straight lines from given points</p>
+</li>
+<li>
+<p><code>:exp</code> a natural exponential function (eⁿ), no value on y-axis can be zero</p>
+</li>
+<li>
+<p><code>:sin</code> applies Hann function to given points</p>
+</li>
+<li>
+<p><code>:wel</code> a power spectrum generator via Welch method</p>
+</li>
+<li>
+<p><code>:sqr</code> applies square (n²) function to given points</p>
+</li>
+<li>
+<p><code>:cub</code> applies cubed (n³) function to given points</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s try a simple example.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="Clojure">(envelope [<span class="integer">0</span> <span class="float">0.5</span> <span class="integer">1</span>] [<span class="integer">1</span> <span class="integer">1</span>] <span class="symbol">:step</span>)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This shape will create a straigt line from 0 to 0.5 and from 0.5 to 1, with each of the two steps takeing 1 second (totalling 2 seconds, which is the default time <code>demo</code> plays an instrument).</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="media/docs_img/env1.png" alt="A simple line">
+</div>
+</div>
+<div class="paragraph">
+<p>To most clearly hear what&#8217;s going on here, let&#8217;s try to play this line as an upwards glissando(gliding note) from 200Hz to 400Hz and see if this works.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="Clojure">(<span class="keyword">let</span> [env (envelope [<span class="integer">0</span> <span class="float">0.5</span> <span class="integer">1</span>] [<span class="integer">1</span> <span class="integer">1</span>] <span class="symbol">:step</span>)]
+  (demo (sin-osc <span class="symbol">:freq</span> (<span class="keyword">+</span> <span class="integer">200</span> (<span class="keyword">*</span> <span class="integer">200</span> (env-gen env <span class="symbol">:action</span> FREE))))))</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This clearly didn&#8217;t sound like glissando, so what&#8217;s going on here? We did indeed specify a line from 0 to 1 and multiplied the line by 200 to glide 200Hz ending at 400Hz. By useing <code>:step</code> the envelope makes no attempt bridge the gap between the points we provited it. So as soon as the instrument started we heard 300Hz and halfway trough it changed to 400Hz. So what happened to our first point of 200Hz? In those cases where the envelope loops, there&#8217;s a chance of distorted hum if the envelope doesn&#8217;t begin where it ends, so point 0 on x-axis works as a pivot point and will never be played.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s try again, but this time let&#8217;s try to bridge the gap by applying a linear function to the points useing <code>:lin</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="Clojure">(<span class="keyword">let</span> [env (envelope [<span class="integer">0</span> <span class="float">0.5</span> <span class="integer">1</span>] [<span class="integer">1</span> <span class="integer">1</span>] <span class="symbol">:lin</span>)]
+  (demo (sin-osc <span class="symbol">:freq</span> (<span class="keyword">+</span> <span class="integer">200</span> (<span class="keyword">*</span> <span class="integer">200</span> (env-gen env <span class="symbol">:action</span> FREE))))))</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This sounded much smoother, no jumps but constantly gliding note for the duration of the two seconds. But to human ears, this linear glide doesn&#8217;t sound very linear even tough the computer did perfectly good job of executeing it linearly. To produce a glissando that a human would sing or perform on a violin, we need to apply a non-linear function to the provided points. Keep in mind our auditory senses are non-linear both for the perception of amplitude and frequency. Where we usually control and measure amplitude on logarithmic scale in decibels, and frequency with note names, midi note number or pitch class sets, all of which are in in squared relationship to the Hz they represent. So for our last attempt glissando, we&#8217;ll apply a squared function to points from 0 to 1 in 2 second interval.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="Clojure">(<span class="keyword">let</span> [env (envelope [<span class="integer">0</span> <span class="integer">1</span>] [<span class="integer">2</span>] <span class="symbol">:sqr</span>)]
+  (demo (sin-osc <span class="symbol">:freq</span> (<span class="keyword">+</span> <span class="integer">200</span> (<span class="keyword">*</span> <span class="integer">200</span> (env-gen env <span class="symbol">:action</span> FREE))))))</code></pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="media/docs_img/env2.png" alt="A squared line">
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+The envelope function can also take a number and/or vector of numbers instead of keywords for the shape. In that case, 0 marks a linear curve and the higher the number, the curvier. Negative values means curve in the opposite direction. These can produce interesting curves which can be hard to visualize, you may want to try the examples from the <a href="http://doc.sccode.org/Classes/Env.html">Supercollider documentation</a> in your Supercollider and use the nice plotter as aid. <code>Env.new</code> and <code>envelope</code> do the same thing.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_built_in_envelope_shapes"><a class="anchor" href="#_built_in_envelope_shapes"></a><a class="link" href="#_built_in_envelope_shapes">3.1.2. Built-in envelope shapes</a></h4>
+<div class="paragraph">
+<p>Like mentioned, you can use the function <code>envelope</code> to define any arbitrary shape you want via <code>:step</code> and apply various function to a vector of provided points. But most of the time you&#8217;ll want to use built-in functions that provide the most commonly used envelope shapes for sound-designing.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>adsr</code> create an attack decay sustain release envelope</p>
+</li>
+<li>
+<p><code>lin</code> creates a linear trapezoidal shaped envelope</p>
+</li>
+<li>
+<p><code>perc</code> creates non-linear exponentially shaped envelope</p>
+</li>
+<li>
+<p><code>triangle</code> creates an envelope which has triangle shape</p>
+</li>
+<li>
+<p><code>sine</code> creates a hanning window shaped envelope</p>
+</li>
+<li>
+<p><code>asr</code> creates attack sustain release envelope</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Additionally you&#8217;ll find in Overtone: <code>adsr-ng</code>, <code>step-shape</code>, <code>linear-shape</code>, <code>exponential-shape</code>, <code>sine-shape</code>, <code>welch-shape</code>, <code>curve-shape</code>, <code>squared-shape</code> and <code>cubed-shape</code>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_env_gen_and_linen"><a class="anchor" href="#_env_gen_and_linen"></a><a class="link" href="#_env_gen_and_linen">3.1.3. env-gen and linen</a></h4>
+<div class="paragraph">
+<p>All shapes returned by <code>envelope</code>, or the built-in envelope functions which themselves all are built on top of <code>envelope</code>, must be used in combination with <code>env-gen</code>. <code>env-gen</code> is what turnes the envelope data into a signal which can be passed around as an operator to other signals, as well as direct argument to various inputs. The first parameter of <code>env-gen</code> is the formentioned <code>envelope</code> shape itself. The other parameters are as follows <code>gate</code>, <code>level-scale</code>, <code>level-bias</code>, <code>time-scale</code> and <code>action</code>.</p>
+</div>
+<div class="paragraph">
+<p>A lesser used minimal alternative ugen to <code>env-gen</code> is <code>linen</code>. <code>linen</code> is a linear attack-sustain-release envelope generator that takes only <code>gate</code> and <code>action</code> as extra arguments and runs only on control-rate (see <a href="#_data_types">Data Types</a> to understand the various rates) and returns a signal that can be used in the same manner as <code>env-gen</code>.</p>
+</div>
+<div class="paragraph">
+<p>The following two expressions will be played exacly the same.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="Clojure">(demo (<span class="keyword">*</span> (env-gen (lin <span class="float">0.1</span> <span class="integer">1</span> <span class="integer">1</span> <span class="float">0.25</span>) <span class="symbol">:action</span> FREE) (sin-osc)))
+
+(demo (<span class="keyword">*</span> <span class="float">0.25</span> (linen (impulse <span class="integer">0</span>) <span class="float">0.1</span> <span class="integer">1</span> <span class="float">1.9</span> <span class="symbol">:action</span> FREE) (sin-osc)))</code></pre>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -963,7 +1122,38 @@ user=&gt;</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_configuration"><a class="anchor" href="#_configuration"></a><a class="link" href="#_configuration">5. Configuration</a></h2>
+<h2 id="_macros"><a class="anchor" href="#_macros"></a><a class="link" href="#_macros">5. Macros</a></h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="_ugens"><a class="anchor" href="#_ugens"></a><a class="link" href="#_ugens">6. UGens</a></h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="_external_devices"><a class="anchor" href="#_external_devices"></a><a class="link" href="#_external_devices">7. External devices</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_midi"><a class="anchor" href="#_midi"></a><a class="link" href="#_midi">7.1. MIDI</a></h3>
+
+</div>
+<div class="sect2">
+<h3 id="_osc"><a class="anchor" href="#_osc"></a><a class="link" href="#_osc">7.2. OSC</a></h3>
+
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_timing"><a class="anchor" href="#_timing"></a><a class="link" href="#_timing">8. Timing</a></h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="_configuration"><a class="anchor" href="#_configuration"></a><a class="link" href="#_configuration">9. Configuration</a></h2>
 <div class="sectionbody">
 
 </div>
@@ -972,7 +1162,7 @@ user=&gt;</code></pre>
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2018-04-28 02:40:14 CEST
+Last updated 2018-04-30 20:15:53 CEST
 </div>
 </div>
 </body>

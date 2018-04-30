@@ -58,7 +58,7 @@ It is my hope that this book will be a gentle introduction to `Overtone` for a c
 
 The computer can be amazing, exciting tool to fulfill our creative needs. But at the same time the computer, and its building blocks, computer programs and code, can be at times undescribeably painful, misconfigured and unpredictive. The hurdles you may encounter may include tooling, mac/linux/windows specific problems, files and libraries mislocated, version incompatabilities, and the list can go on forever. Luckily we will be getting ourselves comfortable with the programming language Clojure, which in the total 10 years of its existance, has seen an explosion of book publications, tutorials, workshops and stackoverflow questions/answers. So if you find youself in the unfortunate situation of getting stuck with something unrelated to Overtone, your odds are good that someone else on the internet already had the same problem as you, and you're only one google search away from getting yourself back on track. At any point in time for any problem you are faceing, you should always feel welcome to open ticket on github, ask question on stackoverflow, the irc(freenode) or on slack(clojurians). The software community as a whole is riddled with micro-aggressive "bromance" behaviour and hence can be at times quite intimidateing for beginners to reach out for help. Which among other factors(in my subjective opinion), we end up with demographics of coders, be it art related or not, completly out of porpotion in relation to the demographics of the general population. Please be aware that the Clojure community has on all social-media platforms, meetups and conferences a set of guidelines for behaviour, protocols in case of violation and group of confidentials to report violations to. I believe that these measures has made the Clojure community relatively more inclusive and diverse, every day I see experienced developers go out of their way to help someone in need of help and I hope you will enjoy the benefits of the Clojure community in the same way as I did when I was a total beginner.
 
-As my personal advice as an artist to artists stepping into the journey of creative codeing; don't believe everything software engineers tell you about software, in the same way you shouldn't believe everything an artist tells you about how art should be. An artist and software-enginner will and should approach code in different ways. You will never hear stories about Beethoven implementing a Continous Integration test to determine if his 7th symphony accedentally lost a note while he was writing his 8th, or Stravinsky trip out on his Bassoon type checker when he wrote the introduction to the Rite of Spring. Learning from the best is always a good approach and becoming better at programming is only going to make you faster and more effective, but do watch out for the abyss of infinite information and take moderate actions. If our goal is to create art for the real world, be completly shameless if your code isn't orthodoxial as long as it produces the desired result and you had fun writing the code. While the "old-school" composer is sitting next to a piano with pen and empty staff notation paper and plans her next 
+As my personal advice as an artist to artists stepping into the journey of creative codeing; don't believe everything software engineers tell you about software, in the same way you shouldn't believe everything an artist tells you about how art should be. An artist and software-enginner will and should approach code in different ways. You will never hear stories about Beethoven implementing a Continous Integration test to determine if his 7th symphony accedentally lost a note while he was writing his 8th, or Stravinsky trip out on his Bassoon type checker when he wrote the introduction to the Rite of Spring. Learning from the best is always a good approach and becoming better at programming is only going to make you faster and more effective, but do watch out for the abyss of infinite information and take moderate actions. If our goal is to create art for the real world, be completly shameless if your code isn't orthodoxial as long as it produces the desired result and you had fun writing the code. While the "old-school" composer is sitting next to a piano with pen and empty staff notation paper, in the same way you will find ourself with an empty text document in your text editor, with your fingers on the keyboard, ready to explore the physical boundries of music, sound and time.
 
 
 == About this Book
@@ -302,11 +302,99 @@ image::reaper_envelope.jpg[Graphical breakpoint editor in REAPER]
 _Application of envelope via graphical breakpoints_
 
 
-The term envelope may or may not sound alien to you. But if you've ever used attack or decay on modular synthesizer or written breakpoints in a DAW like Ardour, ProTools or Reaper, you have used envelopes. Fade-in and fade-out is another commonly used form of envelope. The basic idea is that as time passes, often shown as x-axis in a plot, some value changes accordingly, often drawn on y-axis.
+The term envelope may or may not sound alien to you. But if you've ever used attack or decay on modular synthesizer or written breakpoints in a DAW like Ardour, ProTools or Reaper, you have used envelopes. Fade-in and fade-out is another commonly used form of envelope. The basic idea is that as time passes, often shown as x-axis in a plot, some value changes accordingly, often drawn on y-axis. In fact envelope can be an oscillator and an oscillator can be used an envelope.
 
+Envelopes are most traditionally used to cotrol amplitude and frequency, as will be shown later, envelopes in Overtone can be used for many other things, like amplitude modulation, oscillation, trigger, arpeggiator, trill/tremolo ornaments. Basically anyhing that ties numbers and time togeather.
+
+=== Shapes
+Overtone has a function to create envelope shapes in a format that Supercollider understands, called simply `envelope`. For every envelope there needs to be two vectors provided as arguments, levels (y-axis) and durations in seconds (x-axis), since durations specifies the durations of each step, its size will need to be the size of the levels vector minus 1. You can choose an envelope shape by directly specifying each point via `:step`, or use one of the following keywords to appply a function to your points.
+
+- `:lin` a linear function that creates straight lines from given points
+- `:exp` a natural exponential function (eⁿ), no value on y-axis can be zero
+- `:sin` applies Hann function to given points
+- `:wel` a power spectrum generator via Welch method
+- `:sqr` applies square (n²) function to given points
+- `:cub` applies cubed (n³) function to given points
+
+
+Let's try a simple example.
+```Clojure
+(envelope [0 0.5 1] [1 1] :step)
+```
+This shape will create a straigt line from 0 to 0.5 and from 0.5 to 1, with each of the two steps takeing 1 second (totalling 2 seconds, which is the default time `demo` plays an instrument).
+
+image::env1.png[A simple line]
+
+To most clearly hear what's going on here, let's try to play this line as an upwards glissando(gliding note) from 200Hz to 400Hz and see if this works.
+
+```Clojure
+(let [env (envelope [0 0.5 1] [1 1] :step)]
+  (demo (sin-osc :freq (+ 200 (* 200 (env-gen env :action FREE))))))
+```
+
+This clearly didn't sound like glissando, so what's going on here? We did indeed specify a line from 0 to 1 and multiplied the line by 200 to glide 200Hz ending at 400Hz. By useing `:step` the envelope makes no attempt bridge the gap between the points we provited it. So as soon as the instrument started we heard 300Hz and halfway trough it changed to 400Hz. So what happened to our first point of 200Hz? In those cases where the envelope loops, there's a chance of distorted hum if the envelope doesn't begin where it ends, so point 0 on x-axis works as a pivot point and will never be played.
+
+Let's try again, but this time let's try to bridge the gap by applying a linear function to the points useing `:lin`.
+
+```Clojure
+(let [env (envelope [0 0.5 1] [1 1] :lin)]
+  (demo (sin-osc :freq (+ 200 (* 200 (env-gen env :action FREE))))))
+```
+
+This sounded much smoother, no jumps but constantly gliding note for the duration of the two seconds. But to human ears, this linear glide doesn't sound very linear even tough the computer did perfectly good job of executeing it linearly. To produce a glissando that a human would sing or perform on a violin, we need to apply a non-linear function to the provided points. Keep in mind our auditory senses are non-linear both for the perception of amplitude and frequency. Where we usually control and measure amplitude on logarithmic scale in decibels, and frequency with note names, midi note number or pitch class sets, all of which are in in squared relationship to the Hz they represent. So for our last attempt glissando, we'll apply a squared function to points from 0 to 1 in 2 second interval.
+
+```Clojure
+(let [env (envelope [0 1] [2] :sqr)]
+  (demo (sin-osc :freq (+ 200 (* 200 (env-gen env :action FREE))))))
+```
+
+image::env2.png[A squared line]
+
+TIP: The envelope function can also take a number and/or vector of numbers instead of keywords for the shape. In that case, 0 marks a linear curve and the higher the number, the curvier. Negative values means curve in the opposite direction. These can produce interesting curves which can be hard to visualize, you may want to try the examples from the http://doc.sccode.org/Classes/Env.html[Supercollider documentation] in your Supercollider and use the nice plotter as aid. `Env.new` and `envelope` do the same thing.
+
+=== Built-in envelope shapes
+Like mentioned, you can use the function `envelope` to define any arbitrary shape you want via `:step` and apply various function to a vector of provided points. But most of the time you'll want to use built-in functions that provide the most commonly used envelope shapes for sound-designing.
+
+- `adsr` create an attack decay sustain release envelope
+- `lin` creates a linear trapezoidal shaped envelope
+- `perc` creates non-linear exponentially shaped envelope
+- `triangle` creates an envelope which has triangle shape
+- `sine` creates a hanning window shaped envelope
+- `asr` creates attack sustain release envelope
+
+Additionally you'll find in Overtone: `adsr-ng`, `step-shape`, `linear-shape`, `exponential-shape`, `sine-shape`, `welch-shape`, `curve-shape`, `squared-shape` and `cubed-shape`.
+
+
+=== env-gen and linen
+All shapes returned by `envelope`, or the built-in envelope functions which themselves all are built on top of `envelope`, must be used in combination with `env-gen`. `env-gen` is what turnes the envelope data into a signal which can be passed around as an operator to other signals, as well as direct argument to various inputs. The first parameter of `env-gen` is the formentioned `envelope` shape itself. The other parameters are as follows `gate`, `level-scale`, `level-bias`, `time-scale` and `action`.
+
+
+A lesser used minimal alternative ugen to `env-gen` is `linen`. `linen` is a linear attack-sustain-release envelope generator that takes only `gate` and `action` as extra arguments and runs only on control-rate (see <<Data Types>> to understand the various rates) and returns a signal that can be used in the same manner as `env-gen`.
+
+The following two expressions will be played exacly the same.
+
+```Clojure
+(demo (* (env-gen (lin 0.1 1 1 0.25) :action FREE) (sin-osc)))
+
+(demo (* 0.25 (linen (impulse 0) 0.1 1 1.9 :action FREE) (sin-osc)))
+```
 
 
 
 = Data Types
 
+= Macros
+
+= UGens
+
+= External devices
+
+== MIDI
+
+== OSC
+
+
+= Timing
+
 = Configuration
+
