@@ -304,7 +304,7 @@ _Application of envelope via graphical breakpoints_
 
 The term envelope may or may not sound alien to you. But if you've ever used attack or decay on modular synthesizer or written breakpoints in a DAW like Ardour, ProTools or Reaper, you have used envelopes. Fade-in and fade-out is another commonly used form of envelope. The basic idea is that as time passes, often shown as x-axis in a plot, some value changes accordingly, often drawn on y-axis. In fact envelope can be an oscillator and an oscillator can be used an envelope.
 
-Envelopes are most traditionally used to cotrol amplitude and frequency, as will be shown later, envelopes in Overtone can be used for many other things, like amplitude modulation, oscillation, trigger, arpeggiator, trill/tremolo ornaments. Basically anyhing that ties numbers and time togeather.
+Envelopes are most traditionally used to control amplitude and frequency, as will be shown later, envelopes in Overtone can be used for many other things, like amplitude modulation, oscillation, trigger, arpeggiator, trill/tremolo ornaments. Basically anyhing that ties numbers and time togeather.
 
 === Shapes
 Overtone has a function to create envelope shapes in a format that Supercollider understands, called simply `envelope`. For every envelope there needs to be two vectors provided as arguments, levels (y-axis) and durations in seconds (x-axis), since durations specifies the durations of each step, its size will need to be the size of the levels vector minus 1. You can choose an envelope shape by directly specifying each point via `:step`, or use one of the following keywords to appply a function to your points.
