@@ -546,13 +546,14 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#_setting_up_a_project">2.2. Setting up a project</a></li>
 </ul>
 </li>
-<li><a href="#_sound_designing">3. Sound Designing</a>
+<li><a href="#_basics">3. Basics</a>
 <ul class="sectlevel2">
 <li><a href="#_envelopes">3.1. Envelopes</a>
 <ul class="sectlevel3">
 <li><a href="#_shapes">3.1.1. Shapes</a></li>
 <li><a href="#_built_in_envelope_shapes">3.1.2. Built-in envelope shapes</a></li>
 <li><a href="#_env_gen_and_linen">3.1.3. env-gen and linen</a></li>
+<li><a href="#_other_ways_to_envelope">3.1.4. Other ways to envelope</a></li>
 </ul>
 </li>
 </ul>
@@ -944,17 +945,8 @@ user=&gt;</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_sound_designing"><a class="anchor" href="#_sound_designing"></a><a class="link" href="#_sound_designing">3. Sound Designing</a></h2>
+<h2 id="_basics"><a class="anchor" href="#_basics"></a><a class="link" href="#_basics">3. Basics</a></h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>By calling the process of modifying and manipulateing the mechanism of which a wave with energy travels trough a medium, sound-designing, we are effectivly being as broad as possible with our definition and nothing is left out. The amount of books, research papers and publications done on the topic of sound designing is enormous. Take for example the classic book <a href="https://mitpress.mit.edu/books/microsound">Microsound by Curtis Roads</a>, it covers in over 400 tightly packed pages the various aspects and applications of granular-synthesis. The mathematics required to grasp the contents of that book would be a level of advanced calculus.</p>
-</div>
-<div class="paragraph">
-<p>Luckily for us we don&#8217;t need to concern ourselves with low-level synthesis algorithmis, because inside the Supercollider engine we will find hundreds of functions made to manipulate sound. Functions which gives us more pleasureable interface to the complex mathematics on which they are built upon, in some cases with over two decades of battle tested experience by the Supercollider community on algorithms based on decades of research and hard work by scientists and universities all over the world.</p>
-</div>
-<div class="paragraph">
-<p>When it comes to sound designing, more often than not, less is more. Case in point would be to analyze the almost infinite sonic possibilities you can fit inside one Twitter tweet with Supercollider code, <a href="http://sctweets.tumblr.com/">click to see some examples</a>. I leave it as home assignment to you after reading this book to write few of those Twitter tweets in Overtone, a great practice to improve your Overtone skills.</p>
-</div>
 <div class="sect2">
 <h3 id="_envelopes"><a class="anchor" href="#_envelopes"></a><a class="link" href="#_envelopes">3.1. Envelopes</a></h3>
 <div class="imageblock">
@@ -969,7 +961,7 @@ user=&gt;</code></pre>
 <p>The term envelope may or may not sound alien to you. But if you&#8217;ve ever used attack or decay on modular synthesizer or written breakpoints in a DAW like Ardour, ProTools or Reaper, you have used envelopes. Fade-in and fade-out is another commonly used form of envelope. The basic idea is that as time passes, often shown as x-axis in a plot, some value changes accordingly, often drawn on y-axis. In fact envelope can be an oscillator and an oscillator can be used an envelope.</p>
 </div>
 <div class="paragraph">
-<p>Envelopes are most traditionally used to cotrol amplitude and frequency, as will be shown later, envelopes in Overtone can be used for many other things, like amplitude modulation, oscillation, trigger, arpeggiator, trill/tremolo ornaments. Basically anyhing that ties numbers and time togeather.</p>
+<p>Envelopes are most traditionally used to control amplitude and frequency, as will be shown later, envelopes in Overtone can be used for many other things, like amplitude modulation, oscillation, trigger, arpeggiator, trill/tremolo ornaments. Basically anyhing that ties numbers and time togeather.</p>
 </div>
 <div class="sect3">
 <h4 id="_shapes"><a class="anchor" href="#_shapes"></a><a class="link" href="#_shapes">3.1.1. Shapes</a></h4>
@@ -1096,7 +1088,7 @@ The envelope function can also take a number and/or vector of numbers instead of
 <div class="sect3">
 <h4 id="_env_gen_and_linen"><a class="anchor" href="#_env_gen_and_linen"></a><a class="link" href="#_env_gen_and_linen">3.1.3. env-gen and linen</a></h4>
 <div class="paragraph">
-<p>All shapes returned by <code>envelope</code>, or the built-in envelope functions which themselves all are built on top of <code>envelope</code>, must be used in combination with <code>env-gen</code>. <code>env-gen</code> is what turnes the envelope data into a signal which can be passed around as an operator to other signals, as well as direct argument to various inputs. The first parameter of <code>env-gen</code> is the formentioned <code>envelope</code> shape itself. The other parameters are as follows <code>gate</code>, <code>level-scale</code>, <code>level-bias</code>, <code>time-scale</code> and <code>action</code>.</p>
+<p>All shapes returned by <code>envelope</code>, or the built-in envelope functions which themselves all are built on top of <code>envelope</code>, must be used in combination with <code>env-gen</code>. <code>env-gen</code> is what turns the envelope data into a signal which can be passed around as an operator to other signals, as well as direct argument to various inputs. The first parameter of <code>env-gen</code> is the formentioned <code>envelope</code> shape itself. The other parameters are as follows <code>gate</code>, <code>level-scale</code>, <code>level-bias</code>, <code>time-scale</code> and <code>action</code>.</p>
 </div>
 <div class="paragraph">
 <p>A lesser used minimal alternative ugen to <code>env-gen</code> is <code>linen</code>. <code>linen</code> is a linear attack-sustain-release envelope generator that takes only <code>gate</code> and <code>action</code> as extra arguments and runs only on control-rate (see <a href="#_data_types">Data Types</a> to understand the various rates) and returns a signal that can be used in the same manner as <code>env-gen</code>.</p>
@@ -1109,6 +1101,67 @@ The envelope function can also take a number and/or vector of numbers instead of
 <pre class="CodeRay highlight"><code data-lang="Clojure">(demo (<span class="keyword">*</span> (env-gen (lin <span class="float">0.1</span> <span class="integer">1</span> <span class="integer">1</span> <span class="float">0.25</span>) <span class="symbol">:action</span> FREE) (sin-osc)))
 
 (demo (<span class="keyword">*</span> <span class="float">0.25</span> (linen (impulse <span class="integer">0</span>) <span class="float">0.1</span> <span class="integer">1</span> <span class="float">1.9</span> <span class="symbol">:action</span> FREE) (sin-osc)))</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_other_ways_to_envelope"><a class="anchor" href="#_other_ways_to_envelope"></a><a class="link" href="#_other_ways_to_envelope">3.1.4. Other ways to envelope</a></h4>
+<div class="paragraph">
+<p>Since an envelope can be any modulating signal, we can create an envelope shape useing low-frequency-oscillators or LFO for short. Low frequency oscillator is typically an oscillator that oscillates at a frequency under the lower limit of human hearing range ~22Hz. In overtone you can find LFO oscillators starting with LF, which include <code>lf-saw</code>, <code>lf-par</code>, <code>lf-pulse</code>, <code>lf-tri</code> and countless more. They differ only from traditional oscillator in that they are not band-limited and are more performant, since they don&#8217;t try to anti-aliase high frequencies. When working with LFO&#8217;s in most cases, it doesn&#8217;t matter if you use band-limited or non-band-limited oscillator, they behave exacly the same on low frequencies.</p>
+</div>
+<div class="paragraph">
+<p>The following expression plays a sawtooth oscillator for 1 second with even attack and decay time created from the shape of sinewave. Note that we are converting Hertz(1/sec) to seconds, as reference 1Hz takes 1 second to finish 1 cycle. As we are useing sinewave shape from <code>sin-osc:kr</code> we are only concerned with the positive values from 0 to 1, which occupy the first half of the sinewave. Therefore we multiply the wanted note duration by 2, so that the signal cuts off exacly before the sinewave goes from 0 to a negative value. The <code>line:kr</code> serves as timeout that frees the synth node after 1 second and hence prevents it to play the full 4 seconds which the demo time defaults to.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="Clojure">(demo (<span class="keyword">let</span> [dur <span class="integer">1</span>
+            env (sin-osc<span class="symbol">:kr</span> (<span class="keyword">/</span> <span class="integer">1</span> (<span class="keyword">*</span> <span class="integer">2</span> dur)))]
+        (line<span class="symbol">:kr</span> <span class="integer">0</span> <span class="integer">1</span> dur <span class="symbol">:action</span> FREE)
+        (<span class="keyword">*</span> env (saw <span class="integer">220</span>))))</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now if we wanted a sinewave envelope with two peaks, we need to apply abs (asbolute value) on the LFO signal as not to end with negative amplitute values. Here we don&#8217;t need to cut the sinewave signal in half since applying <code>abs</code> causes the sinewave to become unipolar (from 0 to 1) as opposed to bipolar (from -1 to 1).</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="Clojure">(demo (<span class="keyword">let</span> [dur <span class="integer">1</span>
+            env (abs (sin-osc<span class="symbol">:kr</span> (<span class="keyword">/</span> <span class="integer">1</span> dur)))]
+        (line<span class="symbol">:kr</span> <span class="integer">0</span> <span class="integer">1</span> dur <span class="symbol">:action</span> FREE)
+        (<span class="keyword">*</span> env (saw <span class="integer">220</span>))))</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We can also shift the sin-osc to become unipolar by useing the parameter <code>:add</code>. By adding 1 to a bipolar signal, will cause a shift from &#8592;1,1&gt; to &lt;0,2&gt;, and since we want to limit our range from within the sensible amplitude boundries of &lt;0,1&gt; we need to multiply the signal by 1/2 (or divide it by 2). That can also be achieved by setting the parameter <code>:mul</code> to 0.5 as shown below.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="Clojure">(demo (<span class="keyword">let</span> [dur <span class="integer">1</span>
+            env (abs (sin-osc<span class="symbol">:kr</span> <span class="symbol">:freq</span> (<span class="keyword">/</span> <span class="integer">1</span> dur) <span class="symbol">:mul</span> <span class="float">0.5</span> <span class="symbol">:add</span> <span class="integer">1</span>))]
+        (line<span class="symbol">:kr</span> <span class="integer">0</span> <span class="integer">1</span> dur <span class="symbol">:action</span> FREE)
+        (<span class="keyword">*</span> env (saw <span class="integer">220</span>))))</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>With sawtooth oscillator we can emulate a linear fadein. Here we also need to convert the bipolar sawtooth-wave signal into unipolar signal.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="Clojure">(demo (<span class="keyword">let</span> [dur <span class="integer">1</span>
+            env (abs (lf-saw <span class="symbol">:freq</span> (<span class="keyword">/</span> <span class="integer">1</span> dur) <span class="symbol">:mul</span> <span class="float">0.5</span> <span class="symbol">:add</span> <span class="integer">1</span>))]
+        (line<span class="symbol">:kr</span> <span class="integer">0</span> <span class="integer">1</span> dur <span class="symbol">:action</span> FREE)
+        (<span class="keyword">*</span> env (saw <span class="integer">220</span>))))</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>By providing negative <code>:iphase</code> value we can reverse the signal and get a linear fadeout.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="Clojure">(demo (<span class="keyword">let</span> [dur <span class="integer">1</span>
+            env (lf-saw <span class="symbol">:freq</span> (<span class="keyword">/</span> <span class="integer">1</span> dur) <span class="symbol">:iphase</span> <span class="integer">-2</span> <span class="symbol">:mul</span> <span class="float">0.5</span> <span class="symbol">:add</span> <span class="integer">1</span>)]
+        (line<span class="symbol">:kr</span> <span class="integer">0</span> <span class="integer">1</span> dur <span class="symbol">:action</span> FREE)
+        (<span class="keyword">*</span> <span class="float">0.1</span> env (saw <span class="integer">220</span>))))</code></pre>
 </div>
 </div>
 </div>
@@ -1162,7 +1215,7 @@ The envelope function can also take a number and/or vector of numbers instead of
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2018-04-30 20:15:53 CEST
+Last updated 2018-05-31 03:25:52 CEST
 </div>
 </div>
 </body>

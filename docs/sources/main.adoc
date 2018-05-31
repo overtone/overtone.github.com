@@ -290,12 +290,7 @@ We will conculde this chapter by playing 2 seconds of 440Hz sinewave. It wont so
 
 If you're at this point not hearing any audio, and you're sure that nothing is muted on your computer. Then have a look trough the <<Configuration>> chapter before https://github.com/overtone/overtone/issues/new[opening a ticket].
 
-= Sound Designing
-By calling the process of modifying and manipulateing the mechanism of which a wave with energy travels trough a medium, sound-designing, we are effectivly being as broad as possible with our definition and nothing is left out. The amount of books, research papers and publications done on the topic of sound designing is enormous. Take for example the classic book https://mitpress.mit.edu/books/microsound[Microsound by Curtis Roads], it covers in over 400 tightly packed pages the various aspects and applications of granular-synthesis. The mathematics required to grasp the contents of that book would be a level of advanced calculus.
-
-Luckily for us we don't need to concern ourselves with low-level synthesis algorithmis, because inside the Supercollider engine we will find hundreds of functions made to manipulate sound. Functions which gives us more pleasureable interface to the complex mathematics on which they are built upon, in some cases with over two decades of battle tested experience by the Supercollider community on algorithms based on decades of research and hard work by scientists and universities all over the world.
-
-When it comes to sound designing, more often than not, less is more. Case in point would be to analyze the almost infinite sonic possibilities you can fit inside one Twitter tweet with Supercollider code, http://sctweets.tumblr.com/[click to see some examples]. I leave it as home assignment to you after reading this book to write few of those Twitter tweets in Overtone, a great practice to improve your Overtone skills.
+= Basics
 
 == Envelopes
 image::reaper_envelope.jpg[Graphical breakpoint editor in REAPER]
@@ -366,7 +361,7 @@ Additionally you'll find in Overtone: `adsr-ng`, `step-shape`, `linear-shape`, `
 
 
 === env-gen and linen
-All shapes returned by `envelope`, or the built-in envelope functions which themselves all are built on top of `envelope`, must be used in combination with `env-gen`. `env-gen` is what turnes the envelope data into a signal which can be passed around as an operator to other signals, as well as direct argument to various inputs. The first parameter of `env-gen` is the formentioned `envelope` shape itself. The other parameters are as follows `gate`, `level-scale`, `level-bias`, `time-scale` and `action`.
+All shapes returned by `envelope`, or the built-in envelope functions which themselves all are built on top of `envelope`, must be used in combination with `env-gen`. `env-gen` is what turns the envelope data into a signal which can be passed around as an operator to other signals, as well as direct argument to various inputs. The first parameter of `env-gen` is the formentioned `envelope` shape itself. The other parameters are as follows `gate`, `level-scale`, `level-bias`, `time-scale` and `action`.
 
 
 A lesser used minimal alternative ugen to `env-gen` is `linen`. `linen` is a linear attack-sustain-release envelope generator that takes only `gate` and `action` as extra arguments and runs only on control-rate (see <<Data Types>> to understand the various rates) and returns a signal that can be used in the same manner as `env-gen`.
@@ -379,6 +374,60 @@ The following two expressions will be played exacly the same.
 (demo (* 0.25 (linen (impulse 0) 0.1 1 1.9 :action FREE) (sin-osc)))
 ```
 
+=== Other ways to envelope
+Since an envelope can be any modulating signal, we can create an envelope shape useing low-frequency-oscillators or LFO for short. Low frequency oscillator is typically an oscillator that oscillates at a frequency under the lower limit of human hearing range ~22Hz. In overtone you can find LFO oscillators starting with LF, which include `lf-saw`, `lf-par`, `lf-pulse`, `lf-tri` and countless more. They differ only from traditional oscillator in that they are not band-limited and are more performant, since they don't try to anti-aliase high frequencies. When working with LFO's in most cases, it doesn't matter if you use band-limited or non-band-limited oscillator, they behave exacly the same on low frequencies.
+
+The following expression plays a sawtooth oscillator for 1 second with even attack and decay time created from the shape of sinewave. Note that we are converting Hertz(1/sec) to seconds, as reference 1Hz takes 1 second to finish 1 cycle. As we are useing sinewave shape from `sin-osc:kr` we are only concerned with the positive values from 0 to 1, which occupy the first half of the sinewave. Therefore we multiply the wanted note duration by 2, so that the signal cuts off exacly before the sinewave goes from 0 to a negative value. The `line:kr` serves as timeout that frees the synth node after 1 second and hence prevents it to play the full 4 seconds which the demo time defaults to.
+
+```Clojure
+(demo (let [dur 1
+            env (sin-osc:kr (/ 1 (* 2 dur)))]
+        (line:kr 0 1 dur :action FREE)
+        (* env (saw 220))))
+```
+
+Now if we wanted a sinewave envelope with two peaks, we need to apply abs (asbolute value) on the LFO signal as not to end with negative amplitute values. Here we don't need to cut the sinewave signal in half since applying `abs` causes the sinewave to become unipolar (from 0 to 1) as opposed to bipolar (from -1 to 1).
+
+```Clojure
+(demo (let [dur 1
+            env (abs (sin-osc:kr (/ 1 dur)))]
+        (line:kr 0 1 dur :action FREE)
+        (* env (saw 220))))
+```
+
+We can also shift the sin-osc to become unipolar by useing the parameter `:add`. By adding 1 to a bipolar signal, will cause a shift from <-1,1> to <0,2>, and since we want to limit our range from within the sensible amplitude boundries of <0,1> we need to multiply the signal by 1/2 (or divide it by 2). That can also be achieved by setting the parameter `:mul` to 0.5 as shown below.
+
+```Clojure
+(demo (let [dur 1
+            env (abs (sin-osc:kr :freq (/ 1 dur) :mul 0.5 :add 1))]
+        (line:kr 0 1 dur :action FREE)
+        (* env (saw 220))))
+```
+
+With sawtooth oscillator we can emulate a linear fadein. Here we also need to convert the bipolar sawtooth-wave signal into unipolar signal.
+
+```Clojure
+(demo (let [dur 1
+            env (abs (lf-saw :freq (/ 1 dur) :mul 0.5 :add 1))]
+        (line:kr 0 1 dur :action FREE)
+        (* env (saw 220))))
+```
+
+By providing negative `:iphase` value we can reverse the signal and get a linear fadeout.
+```Clojure
+(demo (let [dur 1
+            env (lf-saw :freq (/ 1 dur) :iphase -2 :mul 0.5 :add 1)]
+        (line:kr 0 1 dur :action FREE)
+        (* 0.1 env (saw 220))))
+```
+
+
+// = Sound Designing
+// By calling the process of modifying and manipulateing the mechanism of which a wave with energy travels trough a medium, sound-designing, we are effectivly being as broad as possible with our definition and nothing is left out. The amount of books, research papers and publications done on the topic of sound designing is enormous. Take for example the classic book https://mitpress.mit.edu/books/microsound[Microsound by Curtis Roads], it covers in over 400 tightly packed pages the various aspects and applications of granular-synthesis. The mathematics required to grasp the contents of that book would be a level of advanced calculus.
+
+// Luckily for us we don't need to concern ourselves with low-level synthesis algorithmis, because inside the Supercollider engine we will find hundreds of functions made to manipulate sound. Functions which gives us more pleasureable interface to the complex mathematics on which they are built upon, in some cases with over two decades of battle tested experience by the Supercollider community on algorithms based on decades of research and hard work by scientists and universities all over the world.
+
+// When it comes to sound designing, more often than not, less is more. Case in point would be to analyze the almost infinite sonic possibilities you can fit inside one Twitter tweet with Supercollider code, http://sctweets.tumblr.com/[click to see some examples]. I leave it as home assignment to you after reading this book to write few of those Twitter tweets in Overtone, a great practice to improve your Overtone skills.
 
 
 = Data Types
