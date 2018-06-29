@@ -1,7 +1,7 @@
 = Overtone User's Guide
 :author: Hlöðver Sigurðsson
-:revdate: April 26, 2018
-:revnumber: 1.0
+:revdate: June 29, 2018
+:revnumber: 1.0.1
 :lang: en
 :encoding: UTF-8
 :doctype: book
@@ -40,7 +40,7 @@ endif::[]
 
 = Introduction
 
-`Overtone` is an audio programming library useing the Supercollider syntheizer engine via the expressive programming language `Clojure`. It combines the power of Supercollider and Clojure enabeling many artistic endeavors, includeing:
+`Overtone` is an audio programming library useing the Supercollider syntheizer engine via the expressive programming language `Clojure`. It combines the power of Supercollider and Clojure enabeling many artistic endeavors, including:
 
 * Sound design
 * Musical composition
@@ -54,11 +54,11 @@ endif::[]
 
 == Preface
 
-It is my hope that this book will be a gentle introduction to `Overtone` for a complete beginner as well for a novice. I hope to approach the topic of Overtone with grain of cynicism; "what can go wrong will go wrong". Overtone is still highly stable library and for a workshop of 6-8 participants, it takes usually half an hour or less to get everyone started. That said, you'll most likely encounter redundant details and/or debugging instructions for highly improbably scenereos while reading this book. Keep in mind that what may seem obvious to you isn't necessarily obvious to everyone.
+It is my hope that this book will be a gentle introduction to `Overtone` for a complete beginner as well for a novice. I hope to approach the topic of Overtone with a grain of cynicism; "what can go wrong will go wrong". Overtone is still a highly unstable library and for a workshop of 6-8 participants, it takes usually half an hour or less to get everyone started. That said, you'll most likely encounter redundant details and/or debugging instructions for highly improbable scenarios while reading this book. Keep in mind that what may seem obvious to you isn't necessarily obvious to everyone.
 
-The computer can be amazing, exciting tool to fulfill our creative needs. But at the same time the computer, and its building blocks, computer programs and code, can be at times undescribeably painful, misconfigured and unpredictive. The hurdles you may encounter may include tooling, mac/linux/windows specific problems, files and libraries mislocated, version incompatabilities, and the list can go on forever. Luckily we will be getting ourselves comfortable with the programming language Clojure, which in the total 10 years of its existance, has seen an explosion of book publications, tutorials, workshops and stackoverflow questions/answers. So if you find youself in the unfortunate situation of getting stuck with something unrelated to Overtone, your odds are good that someone else on the internet already had the same problem as you, and you're only one google search away from getting yourself back on track. At any point in time for any problem you are faceing, you should always feel welcome to open ticket on github, ask question on stackoverflow, the irc(freenode) or on slack(clojurians). The software community as a whole is riddled with micro-aggressive "bromance" behaviour and hence can be at times quite intimidateing for beginners to reach out for help. Which among other factors(in my subjective opinion), we end up with demographics of coders, be it art related or not, completly out of porpotion in relation to the demographics of the general population. Please be aware that the Clojure community has on all social-media platforms, meetups and conferences a set of guidelines for behaviour, protocols in case of violation and group of confidentials to report violations to. I believe that these measures has made the Clojure community relatively more inclusive and diverse, every day I see experienced developers go out of their way to help someone in need of help and I hope you will enjoy the benefits of the Clojure community in the same way as I did when I was a total beginner.
+The computer can be an amazing, exciting tool to fulfill our creative needs. But at the same time the computer, and its building blocks, computer programs and code, can be at times indescribably painful, misconfigured and unpredictive. The hurdles you may encounter may include tooling, mac/linux/windows specific problems, files and libraries mislocated, version incompatibilities, and the list can go on forever. Luckily we will be getting ourselves comfortable with the programming language Clojure, which in the total 10 years of its existence, has seen an explosion of book publications, tutorials, workshops and stackoverflow questions/answers. So if you find youself in the unfortunate situation of getting stuck with something unrelated to Overtone, your odds are good that someone else on the internet already had the same problem as you, and you're only one google search away from getting yourself back on track. At any point in time for any problem you are facing, you should always feel welcome to open ticket on github, ask question on stackoverflow, the irc(freenode) or on slack(clojurians). The software community as a whole is riddled with micro-aggressive "bromance" behaviour and hence can be at times quite intimidateing for beginners to reach out for help. Which among other factors(in my subjective opinion), we end up with demographics of coders, be it art related or not, completly out of proportion in relation to the demographics of the general population. Please be aware that the Clojure community has on all social-media platforms, meetups and conferences a set of guidelines for behaviour, protocols in case of violation and group of confidentials to report violations to. I believe that these measures has made the Clojure community relatively more inclusive and diverse, every day I see experienced developers go out of their way to help someone in need of help and I hope you will enjoy the benefits of the Clojure community in the same way as I did when I was a total beginner.
 
-As my personal advice as an artist to artists stepping into the journey of creative codeing; don't believe everything software engineers tell you about software, in the same way you shouldn't believe everything an artist tells you about how art should be. An artist and software-enginner will and should approach code in different ways. You will never hear stories about Beethoven implementing a Continous Integration test to determine if his 7th symphony accedentally lost a note while he was writing his 8th, or Stravinsky trip out on his Bassoon type checker when he wrote the introduction to the Rite of Spring. Learning from the best is always a good approach and becoming better at programming is only going to make you faster and more effective, but do watch out for the abyss of infinite information and take moderate actions. If our goal is to create art for the real world, be completly shameless if your code isn't orthodoxial as long as it produces the desired result and you had fun writing the code. While the "old-school" composer is sitting next to a piano with pen and empty staff notation paper, in the same way you will find ourself with an empty text document in your text editor, with your fingers on the keyboard, ready to explore the physical boundries of music, sound and time.
+As my personal advice as an artist to artists stepping into the journey of creative coding: don't believe everything software engineers tell you about software, in the same way you shouldn't believe everything an artist tells you about how art should be. An artist and software-engineer will and should approach code in different ways. You will never hear stories about Beethoven implementing a Continous Integration test to determine if his 7th symphony accidentally lost a note while he was writing his 8th, or Stravinsky trip out on his Bassoon type checker when he wrote the introduction to the Rite of Spring. Learning from the best is always a good approach and becoming better at programming is only going to make you faster and more effective, but do watch out for the abyss of infinite information and take moderate actions. If our goal is to create art for the real world, be completly shameless if your code isn't orthodox as long as it produces the desired result and you had fun writing it. While the "old-school" composer is sitting next to a piano with pen and empty staff notation paper, in the same way you will find ourself with an empty text document in your text editor, with your fingers on the keyboard, ready to explore the physical boundaries of music, sound and time.
 
 
 == About this Book
@@ -70,13 +70,13 @@ This is a work in progress. If you find an error, please submit a PR to fix it, 
 
 === Contributing
 
-This source for this book is hosted on https://github.com/overtone/overtone.github.com/docs/sources[Github].
+This source for this book is hosted on https://github.com/overtone/overtone.github.com/tree/master/docs/sources[Github].
 
 === Conventions Used
 
-The examples and code used in this book will try to be as neutral as possible when it comes to choice of text-editor. All modern text editors have some sort of plugin to run and evaluate Clojure code. If you are starting out with the programming language Clojure, you may easily get confused or lost on how to replicate some of the examples in your text editor. Therefore we aim to make all of our examples repliceable useing nothing but Leiningen in the terminal via `lein repl`, and assume from the reader basic understanding of the terminal/cmd (if you know how to explore directories and install apps with the terminal, you probably know enough). Leiningen is the most popular build tool in Clojure and is the build tool that glues Overtone's sources and dependencies togeather. Overtone does work with alternative build tools like `boot`, as well as a standalone java jar file, but that and how to integrate Overtone to specific text-editor will not be included in this book.
+The examples and code used in this book will try to be as neutral as possible when it comes to choice of text-editor. All modern text editors have some sort of plugin to run and evaluate Clojure code. If you are starting out with the programming language Clojure, you may easily get confused or lost on how to replicate some of the examples in your text editor. Therefore we aim to make all of our examples replicable using nothing but Leiningen in the terminal via `lein repl`, and assume from the reader basic understanding of the terminal/cmd (if you know how to explore directories and install apps with the terminal, you probably know enough). Leiningen is the most popular build tool in Clojure and is the build tool that glues Overtone's sources and dependencies together. Overtone does work with alternative build tools like `boot`, as well as a standalone java jar file, but that and how to integrate Overtone to specific text-editor will not be included in this book.
 
-Please be also aware, that topics often overlap, if something isn't clear, have a look at the chapter titles to see if the concepts you're trying to understand is explained elswhere in the book.
+Please be also aware that topics often overlap. If something isn't clear, have a look at the chapter titles to see if the concepts you're trying to understand is explained elswhere in the book.
 
 = Installation
 
@@ -91,7 +91,7 @@ You will need:
 Optionally you could want:
 
 - https://supercollider.github.io/download[Supercollider] for starting scsynth externally from Overtone
-- https://git-scm.com/downloads[Git] for cloneing the Overtone repository from github
+- https://git-scm.com/downloads[Git] for cloning the Overtone repository from github
 
 If running on Linux you must have JACK Audio connection toolkit version 2 or later (which `qjackctl` provides along with easy to use GUI)
 
@@ -117,7 +117,7 @@ $ nix-env -i libjack2
 
 == Setting up a project
 
-Although it is possible to start Overtone directly from the https://github.com/overtone/overtone[github repository] by downloading it as zip or cloneing it with `git clone https://github.com/overtone/overtone.git` in the terminal. It is recommended that `Overtone` is used as any other Clojure library in your own project. So we will do exacly that.
+Although it is possible to start Overtone directly from the https://github.com/overtone/overtone[github repository] by downloading it as zip or cloning it with `git clone https://github.com/overtone/overtone.git` in the terminal, it is recommended that `Overtone` is used as any other Clojure library in your own project. So we will do exacly that.
 
 First create an empty directory, we'll call it overtone (the name is irrelevant here) and go into it
 
@@ -126,7 +126,7 @@ $ mkdir overtone
 $ cd overtone
 ```
 
-Then in your text-editor, create a new textfile and save it into the newly created directory as `project.clj`, this is file that leiningen looks for inside the folder leiningen was started from (ie. you can't start leiningen in directory x and expect it to find `project.clj` in directory y). Then paste the following code into `project.clj` and save the file again.
+Then in your text-editor, create a new textfile and save it into the newly created directory as `project.clj`. This is file that leiningen looks for inside the folder leiningen was started from (ie. you can't start leiningen in directory x and expect it to find `project.clj` in directory y). Then paste the following code into `project.clj` and save the file again.
 
 [subs="verbatim,attributes"]
 ```clojure
