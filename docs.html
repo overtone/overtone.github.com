@@ -522,8 +522,8 @@ table.CodeRay td.code>pre{padding:0}
 <h1>Overtone User&#8217;s Guide</h1>
 <div class="details">
 <span id="author" class="author">Hlöðver Sigurðsson</span><br>
-<span id="revnumber">version 1.0,</span>
-<span id="revdate">April 26, 2018</span>
+<span id="revnumber">version 1.0.1,</span>
+<span id="revdate">June 29, 2018</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -554,20 +554,26 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#_built_in_envelope_shapes">3.1.2. Built-in envelope shapes</a></li>
 <li><a href="#_env_gen_and_linen">3.1.3. env-gen and linen</a></li>
 <li><a href="#_other_ways_to_envelope">3.1.4. Other ways to envelope</a></li>
+<li><a href="#_extra">3.1.5. Extra</a></li>
+</ul>
+</li>
+<li><a href="#_oscillators">3.2. Oscillators</a>
+<ul class="sectlevel3">
+<li><a href="#_wavetable">3.2.1. Wavetable</a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li><a href="#_data_types">4. Data Types</a></li>
-<li><a href="#_macros">5. Macros</a></li>
-<li><a href="#_ugens">6. UGens</a></li>
-<li><a href="#_external_devices">7. External devices</a>
+<li><a href="#_ugens">5. UGens</a></li>
+<li><a href="#_external_devices">6. External devices</a>
 <ul class="sectlevel2">
-<li><a href="#_midi">7.1. MIDI</a></li>
-<li><a href="#_osc">7.2. OSC</a></li>
+<li><a href="#_midi">6.1. MIDI</a></li>
+<li><a href="#_osc">6.2. OSC</a></li>
 </ul>
 </li>
-<li><a href="#_timing">8. Timing</a></li>
+<li><a href="#_timing">7. Timing</a></li>
+<li><a href="#_miscellaneous">8. Miscellaneous</a></li>
 <li><a href="#_configuration">9. Configuration</a></li>
 </ul>
 </div>
@@ -582,7 +588,7 @@ table.CodeRay td.code>pre{padding:0}
 <h2 id="_introduction"><a class="anchor" href="#_introduction"></a><a class="link" href="#_introduction">1. Introduction</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><code>Overtone</code> is an audio programming library useing the Supercollider syntheizer engine via the expressive programming language <code>Clojure</code>. It combines the power of Supercollider and Clojure enabeling many artistic endeavors, includeing:</p>
+<p><code>Overtone</code> is an audio programming library useing the Supercollider syntheizer engine via the expressive programming language <code>Clojure</code>. It combines the power of Supercollider and Clojure enabeling many artistic endeavors, including:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -618,13 +624,13 @@ table.CodeRay td.code>pre{padding:0}
 <div class="sect2">
 <h3 id="_preface"><a class="anchor" href="#_preface"></a><a class="link" href="#_preface">1.1. Preface</a></h3>
 <div class="paragraph">
-<p>It is my hope that this book will be a gentle introduction to <code>Overtone</code> for a complete beginner as well for a novice. I hope to approach the topic of Overtone with grain of cynicism; "what can go wrong will go wrong". Overtone is still highly stable library and for a workshop of 6-8 participants, it takes usually half an hour or less to get everyone started. That said, you&#8217;ll most likely encounter redundant details and/or debugging instructions for highly improbably scenereos while reading this book. Keep in mind that what may seem obvious to you isn&#8217;t necessarily obvious to everyone.</p>
+<p>It is my hope that this book will be a gentle introduction to <code>Overtone</code> for a complete beginner as well for a novice. I hope to approach the topic of Overtone with a grain of cynicism; "what can go wrong will go wrong". Overtone is still a highly unstable library and for a workshop of 6-8 participants, it takes usually half an hour or less to get everyone started. That said, you&#8217;ll most likely encounter redundant details and/or debugging instructions for highly improbable scenarios while reading this book. Keep in mind that what may seem obvious to you isn&#8217;t necessarily obvious to everyone.</p>
 </div>
 <div class="paragraph">
-<p>The computer can be amazing, exciting tool to fulfill our creative needs. But at the same time the computer, and its building blocks, computer programs and code, can be at times undescribeably painful, misconfigured and unpredictive. The hurdles you may encounter may include tooling, mac/linux/windows specific problems, files and libraries mislocated, version incompatabilities, and the list can go on forever. Luckily we will be getting ourselves comfortable with the programming language Clojure, which in the total 10 years of its existance, has seen an explosion of book publications, tutorials, workshops and stackoverflow questions/answers. So if you find youself in the unfortunate situation of getting stuck with something unrelated to Overtone, your odds are good that someone else on the internet already had the same problem as you, and you&#8217;re only one google search away from getting yourself back on track. At any point in time for any problem you are faceing, you should always feel welcome to open ticket on github, ask question on stackoverflow, the irc(freenode) or on slack(clojurians). The software community as a whole is riddled with micro-aggressive "bromance" behaviour and hence can be at times quite intimidateing for beginners to reach out for help. Which among other factors(in my subjective opinion), we end up with demographics of coders, be it art related or not, completly out of porpotion in relation to the demographics of the general population. Please be aware that the Clojure community has on all social-media platforms, meetups and conferences a set of guidelines for behaviour, protocols in case of violation and group of confidentials to report violations to. I believe that these measures has made the Clojure community relatively more inclusive and diverse, every day I see experienced developers go out of their way to help someone in need of help and I hope you will enjoy the benefits of the Clojure community in the same way as I did when I was a total beginner.</p>
+<p>The computer can be an amazing, exciting tool to fulfill our creative needs. But at the same time the computer, and its building blocks, computer programs and code, can be at times indescribably painful, misconfigured and unpredictive. The hurdles you may encounter may include tooling, mac/linux/windows specific problems, files and libraries mislocated, version incompatibilities, and the list can go on forever. Luckily we will be getting ourselves comfortable with the programming language Clojure, which in the total 10 years of its existence, has seen an explosion of book publications, tutorials, workshops and stackoverflow questions/answers. So if you find youself in the unfortunate situation of getting stuck with something unrelated to Overtone, your odds are good that someone else on the internet already had the same problem as you, and you&#8217;re only one google search away from getting yourself back on track. At any point in time for any problem you are facing, you should always feel welcome to open ticket on github, ask question on stackoverflow, the irc(freenode) or on slack(clojurians). The software community as a whole is riddled with micro-aggressive "bromance" behaviour and hence can be at times quite intimidateing for beginners to reach out for help. Which among other factors(in my subjective opinion), we end up with demographics of coders, be it art related or not, completly out of proportion in relation to the demographics of the general population. Please be aware that the Clojure community has on all social-media platforms, meetups and conferences a set of guidelines for behaviour, protocols in case of violation and group of confidentials to report violations to. I believe that these measures has made the Clojure community relatively more inclusive and diverse, every day I see experienced developers go out of their way to help someone in need of help and I hope you will enjoy the benefits of the Clojure community in the same way as I did when I was a total beginner.</p>
 </div>
 <div class="paragraph">
-<p>As my personal advice as an artist to artists stepping into the journey of creative codeing; don&#8217;t believe everything software engineers tell you about software, in the same way you shouldn&#8217;t believe everything an artist tells you about how art should be. An artist and software-enginner will and should approach code in different ways. You will never hear stories about Beethoven implementing a Continous Integration test to determine if his 7th symphony accedentally lost a note while he was writing his 8th, or Stravinsky trip out on his Bassoon type checker when he wrote the introduction to the Rite of Spring. Learning from the best is always a good approach and becoming better at programming is only going to make you faster and more effective, but do watch out for the abyss of infinite information and take moderate actions. If our goal is to create art for the real world, be completly shameless if your code isn&#8217;t orthodoxial as long as it produces the desired result and you had fun writing the code. While the "old-school" composer is sitting next to a piano with pen and empty staff notation paper, in the same way you will find ourself with an empty text document in your text editor, with your fingers on the keyboard, ready to explore the physical boundries of music, sound and time.</p>
+<p>As my personal advice as an artist to artists stepping into the journey of creative coding: don&#8217;t believe everything software engineers tell you about software, in the same way you shouldn&#8217;t believe everything an artist tells you about how art should be. An artist and software-engineer will and should approach code in different ways. You will never hear stories about Beethoven implementing a Continous Integration test to determine if his 7th symphony accidentally lost a note while he was writing his 8th, or Stravinsky trip out on his Bassoon type checker when he wrote the introduction to the Rite of Spring. Learning from the best is always a good approach and becoming better at programming is only going to make you faster and more effective, but do watch out for the abyss of infinite information and take moderate actions. If our goal is to create art for the real world, be completly shameless if your code isn&#8217;t orthodox as long as it produces the desired result and you had fun writing it. While the "old-school" composer is sitting next to a piano with pen and empty staff notation paper, in the same way you will find ourself with an empty text document in your text editor, with your fingers on the keyboard, ready to explore the physical boundaries of music, sound and time.</p>
 </div>
 </div>
 <div class="sect2">
@@ -638,16 +644,16 @@ table.CodeRay td.code>pre{padding:0}
 <div class="sect3">
 <h4 id="_contributing"><a class="anchor" href="#_contributing"></a><a class="link" href="#_contributing">1.2.2. Contributing</a></h4>
 <div class="paragraph">
-<p>This source for this book is hosted on <a href="https://github.com/overtone/overtone.github.com/docs/sources">Github</a>.</p>
+<p>This source for this book is hosted on <a href="https://github.com/overtone/overtone.github.com/tree/master/docs/sources">Github</a>.</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_conventions_used"><a class="anchor" href="#_conventions_used"></a><a class="link" href="#_conventions_used">1.2.3. Conventions Used</a></h4>
 <div class="paragraph">
-<p>The examples and code used in this book will try to be as neutral as possible when it comes to choice of text-editor. All modern text editors have some sort of plugin to run and evaluate Clojure code. If you are starting out with the programming language Clojure, you may easily get confused or lost on how to replicate some of the examples in your text editor. Therefore we aim to make all of our examples repliceable useing nothing but Leiningen in the terminal via <code>lein repl</code>, and assume from the reader basic understanding of the terminal/cmd (if you know how to explore directories and install apps with the terminal, you probably know enough). Leiningen is the most popular build tool in Clojure and is the build tool that glues Overtone&#8217;s sources and dependencies togeather. Overtone does work with alternative build tools like <code>boot</code>, as well as a standalone java jar file, but that and how to integrate Overtone to specific text-editor will not be included in this book.</p>
+<p>The examples and code used in this book will try to be as neutral as possible when it comes to choice of text-editor. All modern text editors have some sort of plugin to run and evaluate Clojure code. If you are starting out with the programming language Clojure, you may easily get confused or lost on how to replicate some of the examples in your text editor. Therefore we aim to make all of our examples replicable using nothing but Leiningen in the terminal via <code>lein repl</code>, and assume from the reader basic understanding of the terminal/cmd (if you know how to explore directories and install apps with the terminal, you probably know enough). Leiningen is the most popular build tool in Clojure and is the build tool that glues Overtone&#8217;s sources and dependencies together. Overtone does work with alternative build tools like <code>boot</code>, as well as a standalone java jar file, but that and how to integrate Overtone to specific text-editor will not be included in this book.</p>
 </div>
 <div class="paragraph">
-<p>Please be also aware, that topics often overlap, if something isn&#8217;t clear, have a look at the chapter titles to see if the concepts you&#8217;re trying to understand is explained elswhere in the book.</p>
+<p>Please be also aware that topics often overlap. If something isn&#8217;t clear, have a look at the chapter titles to see if the concepts you&#8217;re trying to understand is explained elswhere in the book.</p>
 </div>
 </div>
 </div>
@@ -680,7 +686,7 @@ table.CodeRay td.code>pre{padding:0}
 <p><a href="https://supercollider.github.io/download">Supercollider</a> for starting scsynth externally from Overtone</p>
 </li>
 <li>
-<p><a href="https://git-scm.com/downloads">Git</a> for cloneing the Overtone repository from github</p>
+<p><a href="https://git-scm.com/downloads">Git</a> for cloning the Overtone repository from github</p>
 </li>
 </ul>
 </div>
@@ -715,7 +721,7 @@ table.CodeRay td.code>pre{padding:0}
 <div class="sect2">
 <h3 id="_setting_up_a_project"><a class="anchor" href="#_setting_up_a_project"></a><a class="link" href="#_setting_up_a_project">2.2. Setting up a project</a></h3>
 <div class="paragraph">
-<p>Although it is possible to start Overtone directly from the <a href="https://github.com/overtone/overtone">github repository</a> by downloading it as zip or cloneing it with <code>git clone <a href="https://github.com/overtone/overtone.git" class="bare">https://github.com/overtone/overtone.git</a></code> in the terminal. It is recommended that <code>Overtone</code> is used as any other Clojure library in your own project. So we will do exacly that.</p>
+<p>Although it is possible to start Overtone directly from the <a href="https://github.com/overtone/overtone">github repository</a> by downloading it as zip or cloning it with <code>git clone <a href="https://github.com/overtone/overtone.git" class="bare">https://github.com/overtone/overtone.git</a></code> in the terminal, it is recommended that <code>Overtone</code> is used as any other Clojure library in your own project. So we will do exacly that.</p>
 </div>
 <div class="paragraph">
 <p>First create an empty directory, we&#8217;ll call it overtone (the name is irrelevant here) and go into it</p>
@@ -727,7 +733,7 @@ $ cd overtone</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Then in your text-editor, create a new textfile and save it into the newly created directory as <code>project.clj</code>, this is file that leiningen looks for inside the folder leiningen was started from (ie. you can&#8217;t start leiningen in directory x and expect it to find <code>project.clj</code> in directory y). Then paste the following code into <code>project.clj</code> and save the file again.</p>
+<p>Then in your text-editor, create a new textfile and save it into the newly created directory as <code>project.clj</code>. This is file that leiningen looks for inside the folder leiningen was started from (ie. you can&#8217;t start leiningen in directory x and expect it to find <code>project.clj</code> in directory y). Then paste the following code into <code>project.clj</code> and save the file again.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1165,6 +1171,94 @@ The envelope function can also take a number and/or vector of numbers instead of
 </div>
 </div>
 </div>
+<div class="sect3">
+<h4 id="_extra"><a class="anchor" href="#_extra"></a><a class="link" href="#_extra">3.1.5. Extra</a></h4>
+<div class="paragraph">
+<p>Here are some tutorial videos about envelopes, not related specifically to Overtone, but can give ideas.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://www.youtube.com/watch?v=A6pp6OMU5r8">ADSR envelope synth tutorial part A</a></p>
+</li>
+<li>
+<p><a href="https://www.youtube.com/watch?v=9niampRkFW0">ADSR envelope synth tutorial part B</a></p>
+</li>
+<li>
+<p><a href="https://www.youtube.com/watch?v=QXS1v2CQLOY">Modular Synth Basics #09: Linear &amp; Exponential?</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_oscillators"><a class="anchor" href="#_oscillators"></a><a class="link" href="#_oscillators">3.2. Oscillators</a></h3>
+<div class="paragraph">
+<p>This section will cover oscillators in Overtone and more specifically wavetable oscillators; How we can create wavetable oscillators, how we can mix them and how we can use envelope to give a dull sound more liveness. First we will look at wavetables in depth educational purposes and then ever more practical application of wavetable synthesis in Overtone.</p>
+</div>
+<div class="sect3">
+<h4 id="_wavetable"><a class="anchor" href="#_wavetable"></a><a class="link" href="#_wavetable">3.2.1. Wavetable</a></h4>
+<div class="paragraph">
+<p>Wavetable synthesis with computers, explained at its essence, is the way of creating signal by reading phase values from a table and sending those values in sample-rate to a given audio source (also refered to as <a href="https://en.wikipedia.org/wiki/Pulse-code_modulation">Liner Pulse-Code Modulation</a>). In Overtone the phase values are stored between -1 and 1. As opposed to a 16-bit .wav file which stores its values as integers from 0 to 65,535 or −32,768 to 32,767 depending if it&#8217;s unsigned or signed integers respectively. Same goes for the audio hardware in your computer, if it&#8217;s set to 16-bits resolution, then supercollider will remap the floats between -1 and 1 to an integer range that the audio hardware expects to receive. When refering to phase in this context, can be misleading to newcomers. For oversimplification you can think of phase stored from samples and audio files purely as amplitude, since a signal going from -1 to 1 is playing audio on full amplitude strength. Whereas you may play your Overtone instruments with amplitudes that are in the range of 0 and 1 (there&#8217;s no such thing as negative amplitude), supercollider enginge will create a signal that has phase values from -1 to 1 and the audio module will take the signal from Supercollider and remap it to −32,768 to 32,767 (for 16-bit).</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+As a possible source of terminology misunderstanding. The concept of "table" here refers to an indexed iterateable list of values. Clojure has no concept of "table", so when discussing tables in Clojure land, we would be a refering to a vector (or other sequenable list). If refering to a table in Supercollider land, we would be refering to a <code>Buffer</code>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>That trivial knowledge above is quite irrelevant to our task of makeing wavetables in Overtone, but the connection of phase, amplitude, table and storage of audio is important to understand before we proceed. But let&#8217;s create a sinewave table with the following formula \$sum_(n=0)^L=sin(frac{2pin}{L})**A\$. Where <code>L</code> stands for table length (typically a number which is \$2^x\$) and <code>A</code> stands for the amplitude.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="Clojure">(<span class="keyword">let</span> [L (Math/pow <span class="integer">2</span> <span class="integer">10</span>)
+      A <span class="integer">1</span>]
+  (mapv (<span class="keyword">fn</span> [n] (Math/sin (<span class="keyword">/</span> (<span class="keyword">*</span> <span class="integer">2</span> Math/PI n) L))) (<span class="keyword">range</span> <span class="integer">0</span> L)))
+
+<span class="comment">;; =&gt; [0.0 0.006135884649154475 0.012271538285719925 0.01840672990580482 0.024541228522912288....]</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>With amplitude set to 1, we get a vector representing sinewave which goes from -1 to 1. Let&#8217;s turn this into a function that we can user later, where the amplitude is omitted (and hence returns values between -1 and 1). Also let&#8217;s return a buffer instead of a vector so we can play our result later on.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="Clojure">(<span class="keyword">defn</span> <span class="function">generate-sinewave-buffer</span> [len]
+  (<span class="keyword">let</span> [wavetable-vector (mapv (<span class="keyword">fn</span> [n] (Math/sin (<span class="keyword">/</span> (<span class="keyword">*</span> <span class="integer">2</span> Math/PI n) len))) (<span class="keyword">range</span> <span class="integer">0</span> len))
+        empty-buffer     (buffer len)
+        wavetable-buffer (buffer-write! empty-buffer wavetable-vector)]
+    wavetable-buffer))</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Next thing to look out for is the relationship between the sample-rate and table-size. If you imagine the values in the table, which are 1024 being read one by one on the rate of 1/48000 per second (or \$frac{1}{sr}\$). Before 1 second has passed, our table would have been read almost 48 times, creating 48Hz audio signal instead of 1Hz. To compensate for that, we need a simple math to help us even out the relationship between the sample-rate and the table-size by dividing the table-size with the sample-rate. By doing that we can create our first wavetable-oscillator where we can have full control over the frequency of our signal.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="Clojure">(<span class="keyword">def</span> <span class="function">our-sinewave-table</span> (generate-sinewave-buffer <span class="integer">1024</span>))
+
+(demo (<span class="keyword">let</span> [buf                 our-sinewave-table
+            frequency           <span class="integer">440</span>
+            table-size          (buffer-size buf)
+            current-sample-rate (sample-rate)
+            playback-rate       (<span class="keyword">*</span> frequency (<span class="keyword">/</span> table-size current-sample-rate))]
+        (play-buf<span class="symbol">:ar</span> <span class="integer">1</span> buf <span class="symbol">:rate</span> playback-rate <span class="symbol">:loop</span> <span class="predefined-constant">true</span> <span class="symbol">:action</span> FREE)))</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Bravissimo Houston! By multiplying the wanted frequency to the ratio between table-size and sample-rate as defined in <code>playback-rate</code> above, we can modify the frequency as we wish. Later in the manual we will discuss samples, where the function <code>play-buf:ar</code> plays a huge role. With the difference that in wavetable synthesis we generate table representing one cycle, therefore we need to loop over the values multiple times a second to create an audible signal, whereas a sample is usually only played once trough.</p>
+</div>
+<div class="paragraph">
+<p>Now we have to power to generate a vector in Clojure, send it to supercollider-land as a buffer and play back the values stored in the buffer with <code>play-buf:ar</code>. Now let&#8217;s proceed.</p>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -1175,32 +1269,32 @@ The envelope function can also take a number and/or vector of numbers instead of
 </div>
 </div>
 <div class="sect1">
-<h2 id="_macros"><a class="anchor" href="#_macros"></a><a class="link" href="#_macros">5. Macros</a></h2>
+<h2 id="_ugens"><a class="anchor" href="#_ugens"></a><a class="link" href="#_ugens">5. UGens</a></h2>
 <div class="sectionbody">
 
 </div>
 </div>
 <div class="sect1">
-<h2 id="_ugens"><a class="anchor" href="#_ugens"></a><a class="link" href="#_ugens">6. UGens</a></h2>
-<div class="sectionbody">
-
-</div>
-</div>
-<div class="sect1">
-<h2 id="_external_devices"><a class="anchor" href="#_external_devices"></a><a class="link" href="#_external_devices">7. External devices</a></h2>
+<h2 id="_external_devices"><a class="anchor" href="#_external_devices"></a><a class="link" href="#_external_devices">6. External devices</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_midi"><a class="anchor" href="#_midi"></a><a class="link" href="#_midi">7.1. MIDI</a></h3>
+<h3 id="_midi"><a class="anchor" href="#_midi"></a><a class="link" href="#_midi">6.1. MIDI</a></h3>
 
 </div>
 <div class="sect2">
-<h3 id="_osc"><a class="anchor" href="#_osc"></a><a class="link" href="#_osc">7.2. OSC</a></h3>
+<h3 id="_osc"><a class="anchor" href="#_osc"></a><a class="link" href="#_osc">6.2. OSC</a></h3>
 
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_timing"><a class="anchor" href="#_timing"></a><a class="link" href="#_timing">8. Timing</a></h2>
+<h2 id="_timing"><a class="anchor" href="#_timing"></a><a class="link" href="#_timing">7. Timing</a></h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="_miscellaneous"><a class="anchor" href="#_miscellaneous"></a><a class="link" href="#_miscellaneous">8. Miscellaneous</a></h2>
 <div class="sectionbody">
 
 </div>
@@ -1214,9 +1308,25 @@ The envelope function can also take a number and/or vector of numbers instead of
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 1.0<br>
-Last updated 2018-05-31 03:25:52 CEST
+Version 1.0.1<br>
+Last updated 2018-06-29 23:45:49 CEST
 </div>
 </div>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  messageStyle: "none",
+  tex2jax: {
+    inlineMath: [["\\(", "\\)"]],
+    displayMath: [["\\[", "\\]"]],
+    ignoreClass: "nostem|nolatexmath"
+  },
+  asciimath2jax: {
+    delimiters: [["\\$", "\\$"]],
+    ignoreClass: "nostem|noasciimath"
+  },
+  TeX: { equationNumbers: { autoNumber: "none" } }
+});
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.6.0/MathJax.js?config=TeX-MML-AM_HTMLorMML"></script>
 </body>
 </html>

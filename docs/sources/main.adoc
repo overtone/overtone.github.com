@@ -421,6 +421,62 @@ By providing negative `:iphase` value we can reverse the signal and get a linear
         (* 0.1 env (saw 220))))
 ```
 
+=== Extra
+Here are some tutorial videos about envelopes, not related specifically to Overtone, but can give ideas.
+
+- https://www.youtube.com/watch?v=A6pp6OMU5r8[ADSR envelope synth tutorial part A]
+- https://www.youtube.com/watch?v=9niampRkFW0[ADSR envelope synth tutorial part B]
+- https://www.youtube.com/watch?v=QXS1v2CQLOY[Modular Synth Basics #09: Linear & Exponential?]
+
+
+== Oscillators
+This section will cover oscillators in Overtone and more specifically wavetable oscillators; How we can create wavetable oscillators, how we can mix them and how we can use envelope to give a dull sound more liveness. First we will look at wavetables in depth educational purposes and then ever more practical application of wavetable synthesis in Overtone.
+
+=== Wavetable
+Wavetable synthesis with computers, explained at its essence, is the way of creating signal by reading phase values from a table and sending those values in sample-rate to a given audio source (also refered to as https://en.wikipedia.org/wiki/Pulse-code_modulation[Liner Pulse-Code Modulation]). In Overtone the phase values are stored between -1 and 1. As opposed to a 16-bit .wav file which stores its values as integers from 0 to 65,535 or −32,768 to 32,767 depending if it's unsigned or signed integers respectively. Same goes for the audio hardware in your computer, if it's set to 16-bits resolution, then supercollider will remap the floats between -1 and 1 to an integer range that the audio hardware expects to receive. When refering to phase in this context, can be misleading to newcomers. For oversimplification you can think of phase stored from samples and audio files purely as amplitude, since a signal going from -1 to 1 is playing audio on full amplitude strength. Whereas you may play your Overtone instruments with amplitudes that are in the range of 0 and 1 (there's no such thing as negative amplitude), supercollider enginge will create a signal that has phase values from -1 to 1 and the audio module will take the signal from Supercollider and remap it to −32,768 to 32,767 (for 16-bit).
+
+TIP: As a possible source of terminology misunderstanding. The concept of "table" here refers to an indexed iterateable list of values. Clojure has no concept of "table", so when discussing tables in Clojure land, we would be a refering to a vector (or other sequenable list). If refering to a table in Supercollider land, we would be refering to a `Buffer`.
+
+
+That trivial knowledge above is quite irrelevant to our task of makeing wavetables in Overtone, but the connection of phase, amplitude, table and storage of audio is important to understand before we proceed. But let's create a sinewave table with the following formula stem:[sum_(n=0)^L=sin(frac{2pin}{L})**A]. Where `L` stands for table length (typically a number which is stem:[2^x]) and `A` stands for the amplitude.
+
+```Clojure
+(let [L (Math/pow 2 10)
+      A 1]
+  (mapv (fn [n] (Math/sin (/ (* 2 Math/PI n) L))) (range 0 L)))
+
+;; => [0.0 0.006135884649154475 0.012271538285719925 0.01840672990580482 0.024541228522912288....]
+```
+
+With amplitude set to 1, we get a vector representing sinewave which goes from -1 to 1. Let's turn this into a function that we can user later, where the amplitude is omitted (and hence returns values between -1 and 1). Also let's return a buffer instead of a vector so we can play our result later on.
+
+```Clojure
+(defn generate-sinewave-buffer [len]
+  (let [wavetable-vector (mapv (fn [n] (Math/sin (/ (* 2 Math/PI n) len))) (range 0 len))
+        empty-buffer     (buffer len)
+        wavetable-buffer (buffer-write! empty-buffer wavetable-vector)]
+    wavetable-buffer))
+```
+
+Next thing to look out for is the relationship between the sample-rate and table-size. If you imagine the values in the table, which are 1024 being read one by one on the rate of 1/48000 per second (or stem:[frac{1}{sr}]). Before 1 second has passed, our table would have been read almost 48 times, creating 48Hz audio signal instead of 1Hz. To compensate for that, we need a simple math to help us even out the relationship between the sample-rate and the table-size by dividing the table-size with the sample-rate. By doing that we can create our first wavetable-oscillator where we can have full control over the frequency of our signal.
+
+```Clojure
+(def our-sinewave-table (generate-sinewave-buffer 1024))
+
+(demo (let [buf                 our-sinewave-table
+            frequency           440
+            table-size          (buffer-size buf)
+            current-sample-rate (sample-rate)
+            playback-rate       (* frequency (/ table-size current-sample-rate))]
+        (play-buf:ar 1 buf :rate playback-rate :loop true :action FREE)))
+```
+
+Bravissimo Houston! By multiplying the wanted frequency to the ratio between table-size and sample-rate as defined in `playback-rate` above, we can modify the frequency as we wish. Later in the manual we will discuss samples, where the function `play-buf:ar` plays a huge role. With the difference that in wavetable synthesis we generate table representing one cycle, therefore we need to loop over the values multiple times a second to create an audible signal, whereas a sample is usually only played once trough.
+
+Now we have to power to generate a vector in Clojure, send it to supercollider-land as a buffer and play back the values stored in the buffer with `play-buf:ar`. Now let's proceed.
+
+// stem:[f(n)=sum_(k=1)^N P_k sin(frac{2pikn}{L})]
+
 
 // = Sound Designing
 // By calling the process of modifying and manipulateing the mechanism of which a wave with energy travels trough a medium, sound-designing, we are effectivly being as broad as possible with our definition and nothing is left out. The amount of books, research papers and publications done on the topic of sound designing is enormous. Take for example the classic book https://mitpress.mit.edu/books/microsound[Microsound by Curtis Roads], it covers in over 400 tightly packed pages the various aspects and applications of granular-synthesis. The mathematics required to grasp the contents of that book would be a level of advanced calculus.
@@ -432,8 +488,6 @@ By providing negative `:iphase` value we can reverse the signal and get a linear
 
 = Data Types
 
-= Macros
-
 = UGens
 
 = External devices
@@ -442,8 +496,9 @@ By providing negative `:iphase` value we can reverse the signal and get a linear
 
 == OSC
 
-
 = Timing
+
+= Miscellaneous
 
 = Configuration
 

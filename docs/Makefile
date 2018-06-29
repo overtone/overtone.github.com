@@ -6,5 +6,5 @@
 book: docs.html
 
 docs.html: sources/*.adoc
-	bundle exec asciidoctor -o ../docs.html -b html5 -r asciidoctor-diagram sources/main.adoc
+	bundle exec asciidoctor -o ../docs.html -b html5 -a stem -r asciidoctor-diagram sources/main.adoc
 
