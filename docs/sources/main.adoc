@@ -219,9 +219,9 @@ user=>
 
 ```
 
-If something went wrong, see if the stacktrace gave you any meaningful information and proceed to <<Configuration>> and try to rule out that something isn't misconfigured. And come back here and try to start Overtone again before continueing. A good rule of thumb is to read stacktraces from top to bottom, the uppermost lines being the most important ones in most of the cases.
+If something went wrong, see if the stacktrace gave you any meaningful information and proceed to <<Configuration>> and try to rule out that something isn't misconfigured. And come back here and try to start Overtone again before continuing. A good rule of thumb is to read stacktraces from top to bottom, the uppermost lines being the most important ones in most of the cases.
 
-TIP: If you're on Linux too and encounter `Cannot allocate memory` and/or `Cannot use real-time scheduleing` you can totally ignore that, it just means that you're not running preempt realtime-kernel. Switching to rt-kernel can potentially improve your audio performance by allowing Jack to send audio on top priority, but at the cost potentially make things very complicated and possibly insecure, as rt-kernels are usually released at much later than other kernels. If you want to run proprietary nvidia/ati drivers on preemt rt-kernel, you're most likely going too have a bad time, irrelevant if you're a linux expert or a beginner.
+TIP: If you're on Linux too and encounter `Cannot allocate memory` and/or `Cannot use real-time scheduleing` you can totally ignore that, it just means that you're not running preempt realtime-kernel. Switching to rt-kernel can potentially improve your audio performance by allowing Jack to send audio on top priority, but at the cost potentially make things very complicated and possibly insecure, as rt-kernels are usually released that much later than other kernels. If you want to run proprietary nvidia/ati drivers on preemt rt-kernel, you're most likely going too have a bad time, irrelevant if you're a linux expert or a beginner.
 
 
 Now that we have Overtone running successfully. We can start all the functions that Overtone provides at our disposal. Among them is an important helper function called `doc`, which will print the documentation to any function in your scope/reach. Let's try it on the symbols `demo` and `sin-osc`.
@@ -283,12 +283,12 @@ user=>
 Much of what is written in the documentation will be explained in subsequent chapters. But let's suffice to say that `demo` is a function intended to evaluate an instrument and play it immediately for 2 seconds, which can come in handy when developing sounds and you want to hear the results quickly. And `sin-osc` is an oscillator that produces sinewave shape audio-signal (or control-signal, more on that later). Unlike `demo` which needs at least 1 instrument to be given as a parameter, then `sin-osc` can be called without any parameter, if that's the case, then `sin-osc` will look at its own default parameter and use those instead. Which would be 440 cycles per second on full amplitude.
 
 
-We will conculde this chapter by playing 2 seconds of 440Hz sinewave. It wont sound pretty but it's fast and effective way to determine if everything is working accordingly.
+We will conclude this chapter by playing 2 seconds of 440Hz sinewave. It won't sound pretty but it's a fast and effective way to determine if everything is working accordingly.
 ```Clojure
 (demo (sin-osc))
 ```
 
-If you're at this point not hearing any audio, and you're sure that nothing is muted on your computer. Then have a look trough the <<Configuration>> chapter before https://github.com/overtone/overtone/issues/new[opening a ticket].
+If you're at this point not hearing any audio, and you're sure that nothing is muted on your computer. Then have a look through the <<Configuration>> chapter before https://github.com/overtone/overtone/issues/new[opening a ticket].
 
 = Basics
 
