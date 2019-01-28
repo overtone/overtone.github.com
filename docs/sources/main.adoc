@@ -302,7 +302,7 @@ The term envelope may or may not sound alien to you. But if you've ever used att
 Envelopes are most traditionally used to control amplitude and frequency, as will be shown later, envelopes in Overtone can be used for many other things, like amplitude modulation, oscillation, trigger, arpeggiator, trill/tremolo ornaments. Basically anything that ties numbers and time together.
 
 === Shapes
-Overtone has a function to create envelope shapes in a format that Supercollider understands, called simply `envelope`. For every envelope there needs to be two vectors provided as arguments, levels (y-axis) and durations in seconds (x-axis), since durations specifies the durations of each step, its size will need to be the size of the levels vector minus 1. You can choose an envelope shape by directly specifying each point via `:step`, or use one of the following keywords to appply a function to your points.
+Overtone has a function to create envelope shapes in a format that Supercollider understands, called simply `envelope`. For every envelope there needs to be two vectors provided as arguments, levels (y-axis) and durations in seconds (x-axis), since durations specifies the durations of each step, its size will need to be the size of the levels vector minus 1. You can choose an envelope shape by directly specifying each point via `:step`, or use one of the following keywords to apply a function to your points.
 
 - `:lin` a linear function that creates straight lines from given points
 - `:exp` a natural exponential function (eⁿ), no value on y-axis can be zero
@@ -316,7 +316,7 @@ Let's try a simple example.
 ```Clojure
 (envelope [0 0.5 1] [1 1] :step)
 ```
-This shape will create a straigt line from 0 to 0.5 and from 0.5 to 1, with each of the two steps takeing 1 second (totalling 2 seconds, which is the default time `demo` plays an instrument).
+This shape will create a straight line from 0 to 0.5 and from 0.5 to 1, with each of the two steps taking 1 second (totalling 2 seconds, which is the default time `demo` plays an instrument).
 
 image::env1.png[A simple line]
 
@@ -327,16 +327,16 @@ To most clearly hear what's going on here, let's try to play this line as an upw
   (demo (sin-osc :freq (+ 200 (* 200 (env-gen env :action FREE))))))
 ```
 
-This clearly didn't sound like glissando, so what's going on here? We did indeed specify a line from 0 to 1 and multiplied the line by 200 to glide 200Hz ending at 400Hz. By useing `:step` the envelope makes no attempt bridge the gap between the points we provited it. So as soon as the instrument started we heard 300Hz and halfway trough it changed to 400Hz. So what happened to our first point of 200Hz? In those cases where the envelope loops, there's a chance of distorted hum if the envelope doesn't begin where it ends, so point 0 on x-axis works as a pivot point and will never be played.
+This clearly didn't sound like glissando, so what's going on here? We did indeed specify a line from 0 to 1 and multiplied the line by 200 to glide 200Hz ending at 400Hz. By useing `:step` the envelope makes no attempt bridge the gap between the points we provided it. So as soon as the instrument started we heard 300Hz and halfway through it changed to 400Hz. So what happened to our first point of 200Hz? In those cases where the envelope loops, there's a chance of distorted hum if the envelope doesn't begin where it ends, so point 0 on x-axis works as a pivot point and will never be played.
 
-Let's try again, but this time let's try to bridge the gap by applying a linear function to the points useing `:lin`.
+Let's try again, but this time let's try to bridge the gap by applying a linear function to the points using `:lin`.
 
 ```Clojure
 (let [env (envelope [0 0.5 1] [1 1] :lin)]
   (demo (sin-osc :freq (+ 200 (* 200 (env-gen env :action FREE))))))
 ```
 
-This sounded much smoother, no jumps but constantly gliding note for the duration of the two seconds. But to human ears, this linear glide doesn't sound very linear even tough the computer did perfectly good job of executeing it linearly. To produce a glissando that a human would sing or perform on a violin, we need to apply a non-linear function to the provided points. Keep in mind our auditory senses are non-linear both for the perception of amplitude and frequency. Where we usually control and measure amplitude on logarithmic scale in decibels, and frequency with note names, midi note number or pitch class sets, all of which are in in squared relationship to the Hz they represent. So for our last attempt glissando, we'll apply a squared function to points from 0 to 1 in 2 second interval.
+This sounded much smoother, no jumps but a constantly gliding note for the duration of the two seconds. But to human ears, this linear glide doesn't sound very linear even though the computer did perfectly good job of executing it linearly. To produce a glissando that a human would sing or perform on a violin, we need to apply a non-linear function to the provided points. Keep in mind our auditory senses are non-linear both for the perception of amplitude and frequency. Where we usually control and measure amplitude on logarithmic scale in decibels, and frequency with note names, midi note number or pitch class sets, all of which are in in squared relationship to the Hz they represent. So for our last attempt glissando, we'll apply a squared function to points from 0 to 1 in 2 second interval.
 
 ```Clojure
 (let [env (envelope [0 1] [2] :sqr)]
