@@ -361,12 +361,12 @@ Additionally you'll find in Overtone: `adsr-ng`, `step-shape`, `linear-shape`, `
 
 
 === env-gen and linen
-All shapes returned by `envelope`, or the built-in envelope functions which themselves all are built on top of `envelope`, must be used in combination with `env-gen`. `env-gen` is what turns the envelope data into a signal which can be passed around as an operator to other signals, as well as direct argument to various inputs. The first parameter of `env-gen` is the formentioned `envelope` shape itself. The other parameters are as follows `gate`, `level-scale`, `level-bias`, `time-scale` and `action`.
+All shapes returned by `envelope`, or the built-in envelope functions which themselves are all built on top of `envelope`, must be used in combination with `env-gen`. `env-gen` is what turns the envelope data into a signal which can be passed around as an operator to other signals, as well as direct argument to various inputs. The first parameter of `env-gen` is the aforementioned `envelope` shape itself. The other parameters are as follows `gate`, `level-scale`, `level-bias`, `time-scale` and `action`.
 
 
 A lesser used minimal alternative ugen to `env-gen` is `linen`. `linen` is a linear attack-sustain-release envelope generator that takes only `gate` and `action` as extra arguments and runs only on control-rate (see <<Data Types>> to understand the various rates) and returns a signal that can be used in the same manner as `env-gen`.
 
-The following two expressions will be played exacly the same.
+The following two expressions will be played exactly the same.
 
 ```Clojure
 (demo (* (env-gen (lin 0.1 1 1 0.25) :action FREE) (sin-osc)))
