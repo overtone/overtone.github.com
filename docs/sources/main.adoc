@@ -375,9 +375,9 @@ The following two expressions will be played exactly the same.
 ```
 
 === Other ways to envelope
-Since an envelope can be any modulating signal, we can create an envelope shape useing low-frequency-oscillators or LFO for short. Low frequency oscillator is typically an oscillator that oscillates at a frequency under the lower limit of human hearing range ~22Hz. In overtone you can find LFO oscillators starting with LF, which include `lf-saw`, `lf-par`, `lf-pulse`, `lf-tri` and countless more. They differ only from traditional oscillator in that they are not band-limited and are more performant, since they don't try to anti-aliase high frequencies. When working with LFO's in most cases, it doesn't matter if you use band-limited or non-band-limited oscillator, they behave exacly the same on low frequencies.
+Since an envelope can be any modulating signal, we can create an envelope shape using low-frequency-oscillators or LFO for short. A low-frequency-oscillator is typically an oscillator that oscillates at a frequency under the lower limit of human hearing range ~22Hz. In overtone you can find LFO oscillators starting with LF, which include `lf-saw`, `lf-par`, `lf-pulse`, `lf-tri` and countless more. They differ only from traditional oscillators in that they are not band-limited and are more performant, since they don't try to anti-aliase high frequencies. When working with LFO's in most cases, it doesn't matter if you use band-limited or non-band-limited oscillators, they behave exactly the same on low frequencies.
 
-The following expression plays a sawtooth oscillator for 1 second with even attack and decay time created from the shape of sinewave. Note that we are converting Hertz(1/sec) to seconds, as reference 1Hz takes 1 second to finish 1 cycle. As we are useing sinewave shape from `sin-osc:kr` we are only concerned with the positive values from 0 to 1, which occupy the first half of the sinewave. Therefore we multiply the wanted note duration by 2, so that the signal cuts off exacly before the sinewave goes from 0 to a negative value. The `line:kr` serves as timeout that frees the synth node after 1 second and hence prevents it to play the full 4 seconds which the demo time defaults to.
+The following expression plays a sawtooth oscillator for 1 second with even attack and decay time created from the shape of sinewave. Note that we are converting Hertz(1/sec) to seconds, as reference 1Hz takes 1 second to finish 1 cycle. As we are using sinewave shape from `sin-osc:kr` we are only concerned with the positive values from 0 to 1, which occupy the first half of the sinewave. Therefore we multiply the wanted note duration by 2, so that the signal cuts off exacly before the sinewave goes from 0 to a negative value. The `line:kr` serves as timeout that frees the synth node after 1 second and hence prevents it from playing the full 4 seconds which the demo time defaults to.
 
 ```Clojure
 (demo (let [dur 1
@@ -386,7 +386,7 @@ The following expression plays a sawtooth oscillator for 1 second with even atta
         (* env (saw 220))))
 ```
 
-Now if we wanted a sinewave envelope with two peaks, we need to apply abs (asbolute value) on the LFO signal as not to end with negative amplitute values. Here we don't need to cut the sinewave signal in half since applying `abs` causes the sinewave to become unipolar (from 0 to 1) as opposed to bipolar (from -1 to 1).
+Now if we wanted a sinewave envelope with two peaks, we need to apply abs (asbolute value) on the LFO signal so as not to end up with negative amplitude values. Here we don't need to cut the sinewave signal in half since applying `abs` causes the sinewave to become unipolar (from 0 to 1) as opposed to bipolar (from -1 to 1).
 
 ```Clojure
 (demo (let [dur 1
@@ -395,7 +395,7 @@ Now if we wanted a sinewave envelope with two peaks, we need to apply abs (asbol
         (* env (saw 220))))
 ```
 
-We can also shift the sin-osc to become unipolar by useing the parameter `:add`. By adding 1 to a bipolar signal, will cause a shift from <-1,1> to <0,2>, and since we want to limit our range from within the sensible amplitude boundries of <0,1> we need to multiply the signal by 1/2 (or divide it by 2). That can also be achieved by setting the parameter `:mul` to 0.5 as shown below.
+We can also shift the sin-osc to become unipolar by using the parameter `:add`. By adding 1 to a bipolar signal, it will cause a shift from <-1,1> to <0,2>, and since we want to limit our range to be within the sensible amplitude boundaries of <0,1> we need to multiply the signal by 1/2 (or divide it by 2). That can also be achieved by setting the parameter `:mul` to 0.5 as shown below.
 
 ```Clojure
 (demo (let [dur 1
@@ -404,7 +404,7 @@ We can also shift the sin-osc to become unipolar by useing the parameter `:add`.
         (* env (saw 220))))
 ```
 
-With sawtooth oscillator we can emulate a linear fadein. Here we also need to convert the bipolar sawtooth-wave signal into unipolar signal.
+With a sawtooth oscillator we can emulate a linear fadein. Here we also need to convert the bipolar sawtooth-wave signal into unipolar signal.
 
 ```Clojure
 (demo (let [dur 1
