@@ -327,7 +327,7 @@ To most clearly hear what's going on here, let's try to play this line as an upw
   (demo (sin-osc :freq (+ 200 (* 200 (env-gen env :action FREE))))))
 ```
 
-This clearly didn't sound like glissando, so what's going on here? We did indeed specify a line from 0 to 1 and multiplied the line by 200 to glide 200Hz ending at 400Hz. By useing `:step` the envelope makes no attempt bridge the gap between the points we provided it. So as soon as the instrument started we heard 300Hz and halfway through it changed to 400Hz. So what happened to our first point of 200Hz? In those cases where the envelope loops, there's a chance of distorted hum if the envelope doesn't begin where it ends, so point 0 on x-axis works as a pivot point and will never be played.
+This clearly didn't sound like glissando, so what's going on here? We did indeed specify a line from 0 to 1 and multiplied the line by 200 to glide 200Hz ending at 400Hz. Using `:step` the envelope makes no attempt bridge the gap between the points we provided it. So as soon as the instrument started we heard 300Hz and halfway through it changed to 400Hz. So what happened to our first point of 200Hz? In those cases where the envelope loops, there's a chance of distorted hum if the envelope doesn't begin where it ends, so point 0 on x-axis works as a pivot point and will never be played.
 
 Let's try again, but this time let's try to bridge the gap by applying a linear function to the points using `:lin`.
 
@@ -336,7 +336,7 @@ Let's try again, but this time let's try to bridge the gap by applying a linear 
   (demo (sin-osc :freq (+ 200 (* 200 (env-gen env :action FREE))))))
 ```
 
-This sounded much smoother, no jumps but a constantly gliding note for the duration of the two seconds. But to human ears, this linear glide doesn't sound very linear even though the computer did perfectly good job of executing it linearly. To produce a glissando that a human would sing or perform on a violin, we need to apply a non-linear function to the provided points. Keep in mind our auditory senses are non-linear both for the perception of amplitude and frequency. Where we usually control and measure amplitude on logarithmic scale in decibels, and frequency with note names, midi note number or pitch class sets, all of which are in in squared relationship to the Hz they represent. So for our last attempt glissando, we'll apply a squared function to points from 0 to 1 in 2 second interval.
+This sounded much smoother, no jumps but a constantly gliding note for the duration of the two seconds. But to human ears, this linear glide doesn't sound very linear even though the computer did a perfectly good job of executing it linearly. To produce a glissando that a human would sing or perform on a violin, we need to apply a non-linear function to the provided points. Keep in mind our auditory senses are non-linear both for the perception of amplitude and frequency. Where we usually control and measure amplitude on logarithmic scale in decibels, and frequency with note names, midi note number or pitch class sets, all of which are in in squared relationship to the Hz they represent. So for our last attempt at glissando, we'll apply a squared function to points from 0 to 1 in 2 second interval.
 
 ```Clojure
 (let [env (envelope [0 1] [2] :sqr)]
