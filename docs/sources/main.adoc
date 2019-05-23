@@ -280,7 +280,7 @@ nil
 user=> 
 ```
 
-Much of what is written in the documentation will be explained in subsequent chapters. But let's suffice to say that `demo` is a function intended to evaluate an instrument and play it immediately for 2 seconds, which can come in handy when developing sounds and you want to hear the results quickly. And `sin-osc` is an oscillator that produces sinewave shape audio-signal (or control-signal, more on that later). Unlike `demo` which needs at least 1 instrument to be given as a parameter, then `sin-osc` can be called without any parameter, if that's the case, then `sin-osc` will look at its own default parameter and use those instead. Which would be 440 cycles per second on full amplitude.
+Much of what is written in the documentation will be explained in subsequent chapters. But let's suffice to say that `demo` is a function intended to evaluate an instrument and play it immediately for 2 seconds, which can come in handy when developing sounds and you want to hear the results quickly. And `sin-osc` is an oscillator that produces sinewave shape audio-signal (or control-signal, more on that later). Unlike `demo` which needs at least 1 instrument to be given as a parameter, then `sin-osc` can be called without any parameter, if that's the case, then `sin-osc` will look at its own default parameters and use those instead. Which would be 440 cycles per second on full amplitude.
 
 
 We will conclude this chapter by playing 2 seconds of 440Hz sinewave. It won't sound pretty but it's a fast and effective way to determine if everything is working accordingly.
@@ -327,7 +327,7 @@ To most clearly hear what's going on here, let's try to play this line as an upw
   (demo (sin-osc :freq (+ 200 (* 200 (env-gen env :action FREE))))))
 ```
 
-This clearly didn't sound like glissando, so what's going on here? We did indeed specify a line from 0 to 1 and multiplied the line by 200 to glide 200Hz ending at 400Hz. Using `:step` the envelope makes no attempt bridge the gap between the points we provided it. So as soon as the instrument started we heard 300Hz and halfway through it changed to 400Hz. So what happened to our first point of 200Hz? In those cases where the envelope loops, there's a chance of distorted hum if the envelope doesn't begin where it ends, so point 0 on x-axis works as a pivot point and will never be played.
+This clearly didn't sound like glissando, so what's going on here? We did indeed specify a line from 0 to 1 and multiplied the line by 200 to glide 200Hz ending at 400Hz. Using `:step` the envelope makes no attempt to bridge the gap between the points we provided it. So as soon as the instrument started we heard 300Hz and halfway through it changed to 400Hz. So what happened to our first point of 200Hz? In those cases where the envelope loops, there's a chance of distorted hum if the envelope doesn't begin where it ends, so point 0 on x-axis works as a pivot point and will never be played.
 
 Let's try again, but this time let's try to bridge the gap by applying a linear function to the points using `:lin`.
 
@@ -348,7 +348,7 @@ image::env2.png[A squared line]
 TIP: The envelope function can also take a number and/or vector of numbers instead of keywords for the shape. In that case, 0 marks a linear curve and the higher the number, the curvier. Negative values means curve in the opposite direction. These can produce interesting curves which can be hard to visualize, you may want to try the examples from the http://doc.sccode.org/Classes/Env.html[Supercollider documentation] in your Supercollider and use the nice plotter as aid. `Env.new` and `envelope` do the same thing.
 
 === Built-in envelope shapes
-Like mentioned, you can use the function `envelope` to define any arbitrary shape you want via `:step` and apply various function to a vector of provided points. But most of the time you'll want to use built-in functions that provide the most commonly used envelope shapes for sound-designing.
+As mentioned, you can use the function `envelope` to define any arbitrary shape you want via `:step` and apply various function to a vector of provided points. But most of the time you'll want to use built-in functions that provide the most commonly used envelope shapes for sound-designing.
 
 - `adsr` create an attack decay sustain release envelope
 - `lin` creates a linear trapezoidal shaped envelope
@@ -386,7 +386,7 @@ The following expression plays a sawtooth oscillator for 1 second with even atta
         (* env (saw 220))))
 ```
 
-Now if we wanted a sinewave envelope with two peaks, we need to apply abs (asbolute value) on the LFO signal so as not to end up with negative amplitude values. Here we don't need to cut the sinewave signal in half since applying `abs` causes the sinewave to become unipolar (from 0 to 1) as opposed to bipolar (from -1 to 1).
+Now if we wanted a sinewave envelope with two peaks, we need to apply abs (absolute value) on the LFO signal so as not to end up with negative amplitude values. Here we don't need to cut the sinewave signal in half since applying `abs` causes the sinewave to become unipolar (from 0 to 1) as opposed to bipolar (from -1 to 1).
 
 ```Clojure
 (demo (let [dur 1
