@@ -40,7 +40,7 @@ endif::[]
 
 = Introduction
 
-`Overtone` is an audio programming library useing the Supercollider syntheizer engine via the expressive programming language `Clojure`. It combines the power of Supercollider and Clojure enabeling many artistic endeavors, including:
+`Overtone` is an audio programming library using the Supercollider syntheizer engine via the expressive programming language `Clojure`. It combines the power of Supercollider and Clojure enabeling many artistic endeavors, including:
 
 * Sound design
 * Musical composition
